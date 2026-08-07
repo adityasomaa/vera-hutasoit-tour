@@ -6,6 +6,7 @@ import { useLang } from "@/components/providers/LanguageProvider";
 import { CtaBand, PageHero, StatsRow } from "@/components/sections/Common";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Reveal } from "@/components/ui/Reveal";
+import { Stars } from "@/components/ui/Stars";
 import { Avatar } from "@/components/graphics/Brand";
 import { TESTIMONIALS, TOUR_KEYS, type TourKey } from "@/lib/site";
 import { cn, formatDate } from "@/lib/utils";
@@ -22,7 +23,7 @@ export function TestimonialView() {
         eyebrow={d.testimonial.hero.eyebrow}
         title={d.testimonial.hero.title}
         subtitle={d.testimonial.hero.subtitle}
-        scene="beach"
+        photo="beachBoats"
       />
 
       <section className="pt-12 sm:pt-16">
@@ -90,7 +91,7 @@ export function TestimonialView() {
                         {t.name}
                       </span>
                       <span className="block text-[0.78rem] text-faint">
-                        {t.country} · {d.tourTypes[t.tour].name} ·{" "}
+                        {t.country} &middot; {d.tourTypes[t.tour].name} &middot;{" "}
                         {formatDate(t.date, lang)}
                       </span>
                     </span>
@@ -105,26 +106,8 @@ export function TestimonialView() {
       <CtaBand
         title={d.testimonial.cta.title}
         subtitle={d.testimonial.cta.subtitle}
-        scene="beach"
+        photo="jukung"
       />
     </>
-  );
-}
-
-function Stars({ n }: { n: number }) {
-  return (
-    <span className="flex gap-0.5" aria-label={`${n} / 5`}>
-      {Array.from({ length: 5 }).map((_, i) => (
-        <svg
-          key={i}
-          viewBox="0 0 12 12"
-          className={cn("h-3 w-3", i < n ? "text-sunbeam" : "text-line")}
-          fill="currentColor"
-          aria-hidden="true"
-        >
-          <path d="M6 0.5 7.6 4.2 11.5 4.6 8.6 7.2 9.4 11 6 9.1 2.6 11 3.4 7.2 0.5 4.6 4.4 4.2Z" />
-        </svg>
-      ))}
-    </span>
   );
 }

@@ -4,7 +4,7 @@ import { useLang } from "@/components/providers/LanguageProvider";
 import { CtaBand, PageHero, StatsRow } from "@/components/sections/Common";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Reveal, RevealGroup, RevealItem } from "@/components/ui/Reveal";
-import { Scene } from "@/components/graphics/Scene";
+import { Photo } from "@/components/graphics/Photo";
 import { Avatar } from "@/components/graphics/Brand";
 
 export function AboutView() {
@@ -16,7 +16,7 @@ export function AboutView() {
         eyebrow={d.about.hero.eyebrow}
         title={d.about.hero.title}
         subtitle={d.about.hero.subtitle}
-        scene="village"
+        photo="locSidemen"
       />
 
       {/* ---------------- story ---------------- */}
@@ -24,8 +24,12 @@ export function AboutView() {
         <div className="container-vbt">
           <div className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
             <Reveal>
-              <div className="aspect-4/5 overflow-hidden rounded-xl border border-line">
-                <Scene variant="terrace" seed={6} />
+              <div className="relative aspect-4/5 overflow-hidden rounded-xl border border-line">
+                <Photo
+                  name="balineseWoman"
+                  alt={d.about.story.title}
+                  sizes="(max-width: 1024px) 100vw, 32vw"
+                />
               </div>
             </Reveal>
 
@@ -139,7 +143,7 @@ export function AboutView() {
         </div>
       </section>
 
-      <CtaBand title={d.about.cta.title} subtitle={d.about.cta.subtitle} scene="village" />
+      <CtaBand title={d.about.cta.title} subtitle={d.about.cta.subtitle} photo="ceremony" />
     </>
   );
 }

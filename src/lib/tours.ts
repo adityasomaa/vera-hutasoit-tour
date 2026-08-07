@@ -1,5 +1,5 @@
 import type { Lang } from "@/lib/i18n/dictionary";
-import type { SceneVariant } from "@/lib/site";
+import type { PhotoKey } from "@/lib/photos";
 
 /** The two formats that have their own browsable catalogue. */
 export type TourFormat = "private" | "sharing";
@@ -18,9 +18,9 @@ export type Stop = {
 export type Tour = {
   slug: string;
   format: TourFormat;
-  scene: SceneVariant;
-  /** secondary scenes used on the detail page */
-  gallery: SceneVariant[];
+  cover: PhotoKey;
+  /** secondary frames used on the detail page */
+  gallery: PhotoKey[];
   area: L;
   name: L;
   tagline: L;
@@ -47,8 +47,8 @@ const PRIVATE: Tour[] = [
   {
     slug: "ubud-culture-day",
     format: "private",
-    scene: "terrace",
-    gallery: ["temple", "waterfall", "village"],
+    cover: "tourUbudCulture",
+    gallery: ["templeGates", "monkeyForest", "offerings"],
     area: { en: "Ubud & Gianyar", id: "Ubud & Gianyar" },
     name: { en: "Ubud Culture Day", id: "Sehari Budaya Ubud" },
     tagline: {
@@ -184,8 +184,8 @@ const PRIVATE: Tour[] = [
   {
     slug: "nusa-penida-west",
     format: "private",
-    scene: "cliff",
-    gallery: ["beach", "boat", "cliff"],
+    cover: "tourPenidaWest",
+    gallery: ["penidaCliffWalk", "penidaAerial", "jukung"],
     area: { en: "Nusa Penida", id: "Nusa Penida" },
     name: { en: "Nusa Penida West Coast", id: "Nusa Penida Pesisir Barat" },
     tagline: {
@@ -307,8 +307,8 @@ const PRIVATE: Tour[] = [
   {
     slug: "batur-sunrise-trek",
     format: "private",
-    scene: "volcano",
-    gallery: ["volcano", "terrace", "waterfall"],
+    cover: "tourBaturTrek",
+    gallery: ["baturDawn", "baturTrekkers", "baturClouds"],
     area: { en: "Kintamani & Bangli", id: "Kintamani & Bangli" },
     name: { en: "Mount Batur Sunrise Trek", id: "Trekking Sunrise Gunung Batur" },
     tagline: {
@@ -435,8 +435,8 @@ const SHARING: Tour[] = [
   {
     slug: "ubud-highlights-group",
     format: "sharing",
-    scene: "terrace",
-    gallery: ["waterfall", "temple", "village"],
+    cover: "tourUbudGroup",
+    gallery: ["jungleFall", "riceTerraceSoft", "balineseWoman"],
     area: { en: "Ubud & Gianyar", id: "Ubud & Gianyar" },
     name: { en: "Ubud Highlights", id: "Ubud Highlights" },
     tagline: {
@@ -556,8 +556,8 @@ const SHARING: Tour[] = [
   {
     slug: "nusa-penida-group",
     format: "sharing",
-    scene: "cliff",
-    gallery: ["boat", "beach", "cliff"],
+    cover: "tourPenidaGroup",
+    gallery: ["penidaAerial", "beachBoats", "canoe"],
     area: { en: "Nusa Penida", id: "Nusa Penida" },
     name: { en: "Nusa Penida Day Trip", id: "Nusa Penida Sehari" },
     tagline: {
@@ -677,8 +677,8 @@ const SHARING: Tour[] = [
   {
     slug: "uluwatu-kecak-group",
     format: "sharing",
-    scene: "cliff",
-    gallery: ["beach", "temple", "cliff"],
+    cover: "tourKecak",
+    gallery: ["uluwatuTemple", "kecakTorches", "beachBoats"],
     area: { en: "Uluwatu & Jimbaran", id: "Uluwatu & Jimbaran" },
     name: { en: "Uluwatu Sunset & Kecak", id: "Sunset Uluwatu & Kecak" },
     tagline: {

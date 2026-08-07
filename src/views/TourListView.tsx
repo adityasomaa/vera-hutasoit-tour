@@ -21,7 +21,7 @@ export function TourListView({ format }: { format: TourFormat }) {
         eyebrow={copy.eyebrow}
         title={copy.title}
         subtitle={copy.subtitle}
-        scene={TOUR_ACCENT[format].scene}
+        photo={TOUR_ACCENT[format].photo}
       />
 
       <section className="section-y">
@@ -36,9 +36,9 @@ export function TourListView({ format }: { format: TourFormat }) {
             <p className="mt-8 text-muted">{d.tourList.empty}</p>
           ) : (
             <RevealGroup className="mt-8 grid gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
-              {tours.map((t, i) => (
+              {tours.map((t) => (
                 <RevealItem key={t.slug}>
-                  <TourCard tour={t} index={i} />
+                  <TourCard tour={t} />
                 </RevealItem>
               ))}
             </RevealGroup>

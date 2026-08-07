@@ -4,37 +4,33 @@ import { useLang } from "@/components/providers/LanguageProvider";
 import { Reveal } from "@/components/ui/Reveal";
 import { Eyebrow } from "@/components/ui/SectionHeading";
 import { CountUp } from "@/components/ui/CountUp";
-import { Scene } from "@/components/graphics/Scene";
+import { Photo } from "@/components/graphics/Photo";
 import { buttonClass } from "@/components/ui/Button";
-import { waLink, WA_GENERAL, type SceneVariant } from "@/lib/site";
+import { waLink, WA_GENERAL } from "@/lib/site";
+import type { PhotoKey } from "@/lib/photos";
 import { cn } from "@/lib/utils";
 
 /* ================================================================
-   Inner-page hero — left aligned, one quiet image, nothing behind it
+   Inner-page hero — left aligned, one quiet image
    ================================================================ */
 
 export function PageHero({
   eyebrow,
   title,
   subtitle,
-  scene,
+  photo,
   children,
 }: {
   eyebrow: string;
   title: string;
   subtitle?: string;
-  scene?: SceneVariant;
+  photo?: PhotoKey;
   children?: React.ReactNode;
 }) {
   return (
     <section className="border-b border-line pb-12 pt-28 sm:pb-16 sm:pt-36">
       <div className="container-vbt">
-        <div
-          className={cn(
-            "grid items-end gap-10",
-            scene && "lg:grid-cols-[1.3fr_1fr]"
-          )}
-        >
+        <div className={cn("grid items-end gap-10", photo && "lg:grid-cols-[1.3fr_1fr]")}>
           <Reveal className="max-w-2xl">
             <Eyebrow>{eyebrow}</Eyebrow>
             <h1 className="mt-4 font-display text-[clamp(2.1rem,5.2vw,3.4rem)] font-semibold leading-[1.08] tracking-[-0.03em] text-ink">
@@ -48,10 +44,10 @@ export function PageHero({
             {children}
           </Reveal>
 
-          {scene && (
+          {photo && (
             <Reveal delay={0.08} className="hidden lg:block">
-              <div className="aspect-4/3 overflow-hidden rounded-xl border border-line">
-                <Scene variant={scene} seed={3} />
+              <div className="relative aspect-4/3 overflow-hidden rounded-xl border border-line">
+                <Photo name={photo} alt="" sizes="34vw" priority />
               </div>
             </Reveal>
           )}
@@ -62,7 +58,7 @@ export function PageHero({
 }
 
 /* ================================================================
-   Stats — hairline row, no dark band, no gradient numerals
+   Stats — hairline row
    ================================================================ */
 
 export function StatsRow({
@@ -92,17 +88,17 @@ export function StatsRow({
 }
 
 /* ================================================================
-   Closing CTA — flat ink panel, one action
+   Closing CTA — one action, one photograph
    ================================================================ */
 
 export function CtaBand({
   title,
   subtitle,
-  scene = "cliff",
+  photo = "uluwatuCliffs",
 }: {
   title: string;
   subtitle: string;
-  scene?: SceneVariant;
+  photo?: PhotoKey;
 }) {
   const { d, lang } = useLang();
 
@@ -110,8 +106,8 @@ export function CtaBand({
     <section className="section-y">
       <div className="container-vbt">
         <Reveal>
-          <div className="grid overflow-hidden rounded-2xl bg-ink sm:grid-cols-[1.2fr_0.8fr]">
-            <div className="flex flex-col justify-center px-7 py-12 sm:px-11 sm:py-14">
+          <div className="grid overflow-hidden rounded-2xl bg-ink sm:grid-cols-[1.15fr_0.85fr]">
+            <div className="flex flex-col justify-center px-7 py-12 sm:px-11 sm:py-16">
               <h2 className="max-w-[22ch] font-display text-[clamp(1.6rem,3.4vw,2.3rem)] font-semibold leading-[1.14] tracking-[-0.025em] text-paper">
                 {title}
               </h2>
@@ -129,8 +125,8 @@ export function CtaBand({
                 </a>
               </div>
             </div>
-            <div className="relative hidden min-h-[16rem] sm:block">
-              <Scene variant={scene} seed={5} />
+            <div className="relative min-h-[14rem] sm:min-h-[18rem]">
+              <Photo name={photo} alt="" sizes="(max-width: 640px) 100vw, 40vw" />
             </div>
           </div>
         </Reveal>

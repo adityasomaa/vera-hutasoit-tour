@@ -3,7 +3,7 @@
 import { useLang } from "@/components/providers/LanguageProvider";
 import { TransitionLink } from "@/components/ui/TransitionLink";
 import { buttonClass } from "@/components/ui/Button";
-import { Scene } from "@/components/graphics/Scene";
+import { Photo } from "@/components/graphics/Photo";
 
 export default function NotFound() {
   const { d } = useLang();
@@ -27,8 +27,8 @@ export default function NotFound() {
             </TransitionLink>
           </div>
 
-          <div className="aspect-4/3 overflow-hidden rounded-xl border border-line">
-            <Scene variant="village" seed={9} />
+          <div className="relative aspect-4/3 overflow-hidden rounded-xl border border-line">
+            <Photo name="locSidemen" alt="" sizes="(max-width: 1024px) 100vw, 46vw" />
           </div>
         </div>
       </div>

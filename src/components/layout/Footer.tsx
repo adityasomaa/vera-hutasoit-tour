@@ -132,7 +132,16 @@ export function Footer() {
           </div>
         </div>
         <p className="mt-4 text-[0.72rem] leading-relaxed text-faint/80">
-          {d.footer.disclaimer}
+          {d.footer.disclaimer}{" "}
+          <a
+            href="https://www.pexels.com"
+            target="_blank"
+            rel="noreferrer noopener"
+            className="link-underline"
+          >
+            {d.common.photoCredit}
+          </a>
+          .
         </p>
       </div>
     </footer>

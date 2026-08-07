@@ -7,7 +7,7 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Reveal, RevealGroup, RevealItem } from "@/components/ui/Reveal";
 import { Accordion } from "@/components/ui/Accordion";
 import { TransitionLink } from "@/components/ui/TransitionLink";
-import { Scene } from "@/components/graphics/Scene";
+import { Photo } from "@/components/graphics/Photo";
 import { TOUR_ACCENT, TOUR_KEYS, TOUR_ROUTE } from "@/lib/site";
 import { toursByFormat } from "@/lib/tours";
 import { cn } from "@/lib/utils";
@@ -22,13 +22,14 @@ export function TourView() {
         eyebrow={d.tour.hero.eyebrow}
         title={d.tour.hero.title}
         subtitle={d.tour.hero.subtitle}
+        photo="uluwatuCliffs"
       />
 
       {/* ---------------- the three formats ---------------- */}
       <section className="section-y">
         <div className="container-vbt">
           <RevealGroup className="grid gap-x-8 gap-y-12 lg:grid-cols-3">
-            {TOUR_KEYS.map((key, i) => {
+            {TOUR_KEYS.map((key) => {
               const t = d.tourTypes[key];
               const a = TOUR_ACCENT[key];
               const href = TOUR_ROUTE[key];
@@ -36,10 +37,13 @@ export function TourView() {
 
               const body = (
                 <>
-                  <div className="aspect-16/10 overflow-hidden rounded-xl border border-line">
-                    <div className="h-full w-full transition-transform duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] group-hover:scale-[1.03]">
-                      <Scene variant={a.scene} seed={i + 2} />
-                    </div>
+                  <div className="relative aspect-16/10 overflow-hidden rounded-xl border border-line">
+                    <Photo
+                      name={a.photo}
+                      alt={t.name}
+                      sizes="(max-width: 1024px) 100vw, 32vw"
+                      className="transition-transform duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] group-hover:scale-[1.04]"
+                    />
                   </div>
 
                   <div className="mt-5 flex items-center gap-2">
@@ -54,7 +58,7 @@ export function TourView() {
                   <div className="mt-5 flex items-baseline justify-between gap-4 border-t border-line pt-3.5 text-[0.86rem]">
                     <span className="text-ink">
                       <span className="font-display font-medium">{t.price}</span>
-                      <span className="text-faint"> · {t.unit}</span>
+                      <span className="text-faint"> &middot; {t.unit}</span>
                     </span>
                     {count > 0 && (
                       <span className="text-faint">
@@ -143,7 +147,7 @@ export function TourView() {
         </div>
       </section>
 
-      <CtaBand title={d.tour.cta.title} subtitle={d.tour.cta.subtitle} scene="boat" />
+      <CtaBand title={d.tour.cta.title} subtitle={d.tour.cta.subtitle} photo="canoe" />
     </>
   );
 }

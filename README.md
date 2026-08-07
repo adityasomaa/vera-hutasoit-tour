@@ -14,13 +14,13 @@ A bilingual marketing site for a small Bali tour operator, built as a front-end 
 | UI | React 19 · TypeScript |
 | Styling | Tailwind CSS v4, CSS-first `@theme` tokens in OKLCH |
 | Motion | `motion` (Framer Motion 12) |
-| Imagery | Hand-authored inline SVG. No stock photos, no external asset requests |
+| Imagery | Bali photography from Pexels, served through `next/image` |
 
 ## Routes
 
 | Route | Purpose |
 |---|---|
-| `/` | Home — hero, about, tour packages, testimonials, contact form |
+| `/` | Home — hero slider, about, tour packages, destinations, testimonials, contact form |
 | `/about` | Story, values, timeline, team, credentials |
 | `/tour` | The three formats, comparison table, FAQ |
 | `/tour/private` · `/tour/sharing` | Browsable catalogue, three tours each |
@@ -40,6 +40,10 @@ Structure comes from hairlines and spacing rather than cards and shadows. Type i
 **Motion is deliberately sparse.** Scroll reveals travel 14px on an ease-out curve; hovers are colour and a 3% image scale. There is no cursor glow, no floating blobs, no paper grain, no 3D tilt and no shine sweep.
 
 ## Feature notes
+
+**Hero slider with two header schemes.** The home hero cycles five iconic Bali frames. Every photograph in `src/lib/photos.ts` records whether it reads dark or light; the slider publishes that through `HeaderToneProvider`, and the header switches between a light and a dark scheme so it stays legible over whichever frame is showing. The scrim flips with it — flat colour with alpha, never a gradient. Autoplay pauses on hover and has a visible pause control; `prefers-reduced-motion` disables it entirely.
+
+**Form controls are all custom.** No native `<select>` appears anywhere: `Select` in `src/components/ui/Field.tsx` is a styled combobox with full keyboard support (arrows, Home/End, Enter, Escape) and correct ARIA. The date field stretches the native picker indicator across the whole control and also calls `showPicker()` on click, so tapping anywhere in the field opens the calendar rather than only the small icon.
 
 **Two loaders.** `IntroLoader` runs on a fresh load of the site, so also when someone lands directly on `/`. `PageCurtain` handles route-to-route navigation and enforces a strict order so nothing is ever seen mid-change:
 

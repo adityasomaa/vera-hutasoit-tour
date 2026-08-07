@@ -6,6 +6,7 @@ import { AnimatePresence, motion } from "motion/react";
 import { useLang } from "@/components/providers/LanguageProvider";
 import { useTourModal } from "@/components/providers/TourModalProvider";
 import { useTransition } from "@/components/providers/TransitionProvider";
+import { useHeaderTone } from "@/components/providers/HeaderToneProvider";
 import { TransitionLink } from "@/components/ui/TransitionLink";
 import { LogoLockup } from "@/components/graphics/Brand";
 import { buttonClass } from "@/components/ui/Button";
@@ -17,6 +18,7 @@ export function Navbar() {
   const pathname = usePathname();
   const { openModal } = useTourModal();
   const { busy } = useTransition();
+  const { tone } = useHeaderTone();
 
   const [scrolled, setScrolled] = useState(false);
   const [dropdown, setDropdown] = useState(false);
@@ -53,6 +55,14 @@ export function Navbar() {
   const isActive = (href: string) =>
     href === "/" ? pathname === "/" : pathname.startsWith(href);
 
+  /* Once scrolled the header owns its own background, so the hero's tone
+     stops applying. Before that it sits on the photograph and follows it. */
+  const overlay = !scrolled && tone !== null;
+  const onDark = overlay && tone === "light";
+
+  const linkIdle = onDark ? "text-paper/75 hover:text-paper" : "text-muted hover:text-ink";
+  const linkOn = onDark ? "text-paper" : "text-ink";
+
   const openDropdown = () => {
     if (closeTimer.current) clearTimeout(closeTimer.current);
     setDropdown(true);
@@ -73,7 +83,7 @@ export function Navbar() {
         <div className="container-vbt">
           <nav className="flex h-16 items-center justify-between gap-6 sm:h-[4.5rem]">
             <TransitionLink href="/" aria-label={d.brand.name} className="shrink-0">
-              <LogoLockup />
+              <LogoLockup dark={onDark} />
             </TransitionLink>
 
             {/* ---------- desktop ---------- */}
@@ -93,7 +103,7 @@ export function Navbar() {
                         aria-expanded={dropdown}
                         className={cn(
                           "link-underline inline-flex items-center gap-1.5 py-2 text-[0.92rem] transition-colors duration-200",
-                          isActive("/tour") ? "text-ink" : "text-muted hover:text-ink"
+                          isActive("/tour") ? linkOn : linkIdle
                         )}
                       >
                         {d.nav.tour}
@@ -174,7 +184,7 @@ export function Navbar() {
                       data-active={isActive(r.href)}
                       className={cn(
                         "link-underline block py-2 text-[0.92rem] transition-colors duration-200",
-                        isActive(r.href) ? "text-ink" : "text-muted hover:text-ink"
+                        isActive(r.href) ? linkOn : linkIdle
                       )}
                     >
                       {d.nav[r.key]}
@@ -199,7 +209,12 @@ export function Navbar() {
                 onClick={() => setMobile((v) => !v)}
                 aria-expanded={mobile}
                 aria-label={mobile ? d.nav.closeMenu : d.nav.openMenu}
-                className="grid h-10 w-10 place-items-center rounded-full border border-line text-ink transition-colors duration-200 hover:border-ink lg:hidden"
+                className={cn(
+                  "grid h-10 w-10 place-items-center rounded-full border transition-colors duration-200 lg:hidden",
+                  onDark && !mobile
+                    ? "border-paper/40 text-paper hover:border-paper"
+                    : "border-line text-ink hover:border-ink"
+                )}
               >
                 <span className="relative block h-3 w-4">
                   <span

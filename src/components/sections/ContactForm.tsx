@@ -1,39 +1,49 @@
 "use client";
 
-import { useState } from "react";
+import { useId, useState } from "react";
 import { useLang } from "@/components/providers/LanguageProvider";
 import { useConsent } from "@/components/providers/ConsentProvider";
 import { Button } from "@/components/ui/Button";
+import { Field, Select, TextArea, TextInput } from "@/components/ui/Field";
 import { waLink } from "@/lib/site";
-import { EMAIL_RE, cn } from "@/lib/utils";
+import { EMAIL_RE } from "@/lib/utils";
 
 type Form = {
   name: string;
   email: string;
   dates: string;
   pax: string;
+  interest: number | null;
   message: string;
 };
 
-const EMPTY: Form = { name: "", email: "", dates: "", pax: "", message: "" };
+const EMPTY: Form = {
+  name: "",
+  email: "",
+  dates: "",
+  pax: "",
+  interest: null,
+  message: "",
+};
 
 /**
  * The site has no backend, so this composes a readable WhatsApp message
  * instead of pretending to send an email. Same destination as every other
  * booking action.
  */
-export function ContactForm({ compact = false }: { compact?: boolean }) {
+export function ContactForm() {
   const { d, lang } = useLang();
   const { track } = useConsent();
+  const uid = useId();
   const [form, setForm] = useState<Form>(EMPTY);
   const [errors, setErrors] = useState<Record<string, string>>({});
 
-  const set = (k: keyof Form, v: string) => {
+  const set = <K extends keyof Form>(k: K, v: Form[K]) => {
     setForm((f) => ({ ...f, [k]: v }));
     setErrors((e) => {
-      if (!e[k]) return e;
+      if (!e[k as string]) return e;
       const next = { ...e };
-      delete next[k];
+      delete next[k as string];
       return next;
     });
   };
@@ -56,6 +66,7 @@ export function ContactForm({ compact = false }: { compact?: boolean }) {
             email: "Email",
             dates: "Tanggal",
             pax: "Jumlah orang",
+            interest: "Tur yang diminati",
             message: "Pesan",
           }
         : {
@@ -64,6 +75,7 @@ export function ContactForm({ compact = false }: { compact?: boolean }) {
             email: "Email",
             dates: "Dates",
             pax: "Travellers",
+            interest: "Tour of interest",
             message: "Message",
           };
 
@@ -74,6 +86,9 @@ export function ContactForm({ compact = false }: { compact?: boolean }) {
       form.email.trim() ? `${L.email}: ${form.email.trim()}` : null,
       form.dates.trim() ? `${L.dates}: ${form.dates.trim()}` : null,
       form.pax.trim() ? `${L.pax}: ${form.pax.trim()}` : null,
+      form.interest !== null
+        ? `${L.interest}: ${d.contact.form.interestOpts[form.interest]}`
+        : null,
       "",
       `${L.message}: ${form.message.trim()}`,
     ]
@@ -86,46 +101,82 @@ export function ContactForm({ compact = false }: { compact?: boolean }) {
 
   return (
     <form onSubmit={submit} noValidate className="flex flex-col gap-5">
-      <div className={cn("grid gap-5", compact ? "sm:grid-cols-2" : "sm:grid-cols-2")}>
-        <TextField
+      <div className="grid gap-5 sm:grid-cols-2">
+        <Field
           label={d.contact.form.name}
-          placeholder={d.contact.form.namePh}
-          value={form.name}
-          onChange={(v) => set("name", v)}
           error={errors.name}
           required
-        />
-        <TextField
-          label={`${d.contact.form.email} (${d.common.optional})`}
-          placeholder={d.contact.form.emailPh}
-          type="email"
-          value={form.email}
-          onChange={(v) => set("email", v)}
+          htmlFor={`${uid}-name`}
+        >
+          <TextInput
+            id={`${uid}-name`}
+            value={form.name}
+            onChange={(e) => set("name", e.target.value)}
+            placeholder={d.contact.form.namePh}
+            error={errors.name}
+          />
+        </Field>
+
+        <Field
+          label={d.contact.form.email}
           error={errors.email}
-        />
-        <TextField
-          label={d.contact.form.dates}
-          placeholder={d.contact.form.datesPh}
-          value={form.dates}
-          onChange={(v) => set("dates", v)}
-        />
-        <TextField
-          label={d.contact.form.pax}
-          placeholder={d.contact.form.paxPh}
-          value={form.pax}
-          onChange={(v) => set("pax", v)}
-        />
+          optional
+          htmlFor={`${uid}-email`}
+        >
+          <TextInput
+            id={`${uid}-email`}
+            type="email"
+            value={form.email}
+            onChange={(e) => set("email", e.target.value)}
+            placeholder={d.contact.form.emailPh}
+            error={errors.email}
+          />
+        </Field>
+
+        <Field label={d.contact.form.dates} htmlFor={`${uid}-dates`}>
+          <TextInput
+            id={`${uid}-dates`}
+            value={form.dates}
+            onChange={(e) => set("dates", e.target.value)}
+            placeholder={d.contact.form.datesPh}
+          />
+        </Field>
+
+        <Field label={d.contact.form.pax} htmlFor={`${uid}-pax`}>
+          <TextInput
+            id={`${uid}-pax`}
+            value={form.pax}
+            onChange={(e) => set("pax", e.target.value)}
+            placeholder={d.contact.form.paxPh}
+          />
+        </Field>
       </div>
 
-      <TextField
+      <Field label={d.contact.form.interest} htmlFor={`${uid}-interest`}>
+        <Select
+          id={`${uid}-interest`}
+          options={d.contact.form.interestOpts}
+          value={form.interest}
+          onChange={(i) => set("interest", i)}
+          placeholder={d.common.choose}
+        />
+      </Field>
+
+      <Field
         label={d.contact.form.message}
-        placeholder={d.contact.form.messagePh}
-        value={form.message}
-        onChange={(v) => set("message", v)}
         error={errors.message}
-        textarea
         required
-      />
+        htmlFor={`${uid}-message`}
+      >
+        <TextArea
+          id={`${uid}-message`}
+          rows={5}
+          value={form.message}
+          onChange={(e) => set("message", e.target.value)}
+          placeholder={d.contact.form.messagePh}
+          error={errors.message}
+        />
+      </Field>
 
       <div className="flex flex-wrap items-center gap-4">
         <Button type="submit" variant="book" size="md">
@@ -136,56 +187,5 @@ export function ContactForm({ compact = false }: { compact?: boolean }) {
         </p>
       </div>
     </form>
-  );
-}
-
-function TextField({
-  label,
-  placeholder,
-  value,
-  onChange,
-  error,
-  type = "text",
-  textarea,
-  required,
-}: {
-  label: string;
-  placeholder?: string;
-  value: string;
-  onChange: (v: string) => void;
-  error?: string;
-  type?: string;
-  textarea?: boolean;
-  required?: boolean;
-}) {
-  const base =
-    "w-full rounded-lg border bg-surface px-3.5 py-2.5 text-[0.92rem] text-ink outline-none transition-colors duration-200 placeholder:text-faint";
-  const tone = error ? "border-coral focus:border-coral" : "border-line focus:border-lagoon";
-
-  return (
-    <div className={cn("flex flex-col gap-2", textarea && "sm:col-span-2")}>
-      <label className="text-[0.8rem] font-medium text-ink-2">
-        {label}
-        {required && <span className="ml-1 text-coral">*</span>}
-      </label>
-      {textarea ? (
-        <textarea
-          rows={5}
-          value={value}
-          onChange={(e) => onChange(e.target.value)}
-          placeholder={placeholder}
-          className={cn(base, tone, "resize-none leading-relaxed")}
-        />
-      ) : (
-        <input
-          type={type}
-          value={value}
-          onChange={(e) => onChange(e.target.value)}
-          placeholder={placeholder}
-          className={cn(base, tone)}
-        />
-      )}
-      {error && <p className="text-[0.78rem] text-coral-deep">{error}</p>}
-    </div>
   );
 }

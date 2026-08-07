@@ -15,7 +15,7 @@ export const LANGS: { code: Lang; label: string; short: string }[] = [
 const en = {
   brand: {
     name: "Vera Bali Tour",
-    tagline: "Bali, the way a friend would show it to you.",
+    tagline: "Local guides, honest prices, unhurried days.",
   },
 
   nav: {
@@ -63,18 +63,21 @@ const en = {
   home: {
     hero: {
       eyebrow: "Licensed local operator, since 2014",
-      title: "See Bali like a local, not a list",
+      title: "Explore Bali with guides who live here",
       subtitle:
-        "A small Bali-born team running private, sharing and fully custom day trips. No megaphone, no forced souvenir stops.",
+        "A small Bali-born team running private, sharing and fully custom day trips. Honest prices and unhurried days.",
       ctaPrimary: "Book on WhatsApp",
       ctaSecondary: "See our tours",
       stat1: "12,400 guests guided",
       stat2: "4.9 average rating",
       stat3: "Replies in about 15 minutes",
+      slideLabel: "Show slide",
+      pause: "Pause slideshow",
+      play: "Play slideshow",
     },
     about: {
       eyebrow: "About us",
-      title: "One car in 2014. Eighteen people now, and still answering our own messages.",
+      title: "From one car in 2014 to a team of eighteen",
       body: [
         "Vera grew up in Gianyar, ten minutes from a rice terrace tourists now queue to photograph. After years driving for large agencies she kept hitting the same problem: the schedule always won and the guest always lost.",
         "So she started something smaller. One rule, then and now: the itinerary bends around the guest, never the other way round.",
@@ -91,9 +94,47 @@ const en = {
       title: "Three ways to travel",
       subtitle: "Same guides, same care. Pick the format that fits your budget and how private you want it.",
     },
+    locations: {
+      eyebrow: "Destinations",
+      title: "Where we can take you",
+      subtitle:
+        "Every route below can be combined into a single day or spread across several. Tell us which ones you want and we will build the order around the traffic and the light.",
+      items: [
+        {
+          name: "Ubud & The Highlands",
+          area: "Gianyar",
+          desc: "Rice terraces, the monkey forest, holy springs and a coffee stop with a view down the valley.",
+        },
+        {
+          name: "Nusa Penida",
+          area: "45 min by boat",
+          desc: "Kelingking cliff, Broken Beach and Crystal Bay, reached on the first boat before the crowds.",
+        },
+        {
+          name: "Mount Batur",
+          area: "Kintamani",
+          desc: "A dark start, a two-hour climb and breakfast cooked in a volcanic steam vent at 1,717 metres.",
+        },
+        {
+          name: "Uluwatu & The South",
+          area: "Badung",
+          desc: "Clifftop temple, the Kecak fire dance at sunset and grilled seafood on Jimbaran sand.",
+        },
+        {
+          name: "Northern Waterfalls",
+          area: "Buleleng",
+          desc: "Sekumpul, Banyumala and Git Git. The green, cool, far-from-traffic side of the island.",
+        },
+        {
+          name: "Sidemen & East Bali",
+          area: "Karangasem",
+          desc: "Weaving villages, water palaces and the quiet Bali that people came for in the eighties.",
+        },
+      ],
+    },
     testimonial: {
-      eyebrow: "Guest words",
-      title: "Not written by us",
+      eyebrow: "Testimonials",
+      title: "What our guests say",
       cta: "Read all reviews",
     },
     contact: {
@@ -108,13 +149,13 @@ const en = {
   about: {
     hero: {
       eyebrow: "About us",
-      title: "Started with one car and a very long list of favourite places",
+      title: "A small Bali tour operator, running since 2014",
       subtitle:
         "Vera Bali Tour began in 2014 in a Denpasar living room. Ten years later we are still small on purpose. The moment we grow past what we can personally check, the trips stop feeling like ours.",
     },
     story: {
       eyebrow: "Our story",
-      title: "We built the company we wished existed",
+      title: "How Vera Bali Tour started",
       body: [
         "Vera grew up in Gianyar, ten minutes from a rice terrace that tourists now queue to photograph. After years of driving for large agencies, she kept running into the same problem: the schedule always won, and the guest always lost.",
         "So in 2014 she started something smaller. One car, one phone number, and a rule that the itinerary bends around the guest rather than the other way round. The first month brought four bookings. All four sent friends.",
@@ -122,8 +163,8 @@ const en = {
       ],
     },
     values: {
-      eyebrow: "What we stand on",
-      title: "Three things we refuse to compromise",
+      eyebrow: "Our values",
+      title: "Three things we never compromise on",
       items: [
         {
           title: "Nobody gets rushed",
@@ -140,8 +181,8 @@ const en = {
       ],
     },
     timeline: {
-      eyebrow: "The long version",
-      title: "How we got here",
+      eyebrow: "Our journey",
+      title: "Milestones",
       items: [
         { year: "2014", title: "One car, one driver", desc: "Vera starts taking bookings from a notebook and a second-hand Avanza." },
         { year: "2016", title: "First sharing routes", desc: "Demand from solo travellers pushes us to open small, capped group days." },
@@ -153,7 +194,7 @@ const en = {
     },
     team: {
       eyebrow: "The people",
-      title: "Who you will actually be talking to",
+      title: "Meet the team",
       items: [
         { name: "Vera Hutasoit", role: "Founder & Head Planner", bio: "Builds every custom itinerary personally. Will argue with you about the best sunrise spot." },
         { name: "Made Suparta", role: "Lead Guide", bio: "Licensed since 2009. Speaks Balinese, Indonesian, English and fluent temple etiquette." },
@@ -166,7 +207,7 @@ const en = {
       items: ["Registered tour operator", "Passenger insurance covered", "Certified local guides", "Verified payment partner"],
     },
     cta: {
-      title: "Come travel with us",
+      title: "Ready to travel with us?",
       subtitle: "Tell us the trip you are imagining. We will be honest about what is possible.",
     },
   },
@@ -179,8 +220,8 @@ const en = {
         "Every tour is run by our own licensed guides and priced flat. Browse the private and sharing catalogues, or send us a wishlist and we will build something.",
     },
     compare: {
-      eyebrow: "Side by side",
-      title: "Which one fits you",
+      eyebrow: "Comparison",
+      title: "Which format fits you",
       headers: ["", "Private", "Sharing", "Customized"],
       rows: [
         { label: "Starting price", values: ["IDR 850,000 / car", "IDR 245,000 / person", "Quoted"] },
@@ -192,8 +233,8 @@ const en = {
       ],
     },
     faq: {
-      eyebrow: "Before you ask",
-      title: "Frequently asked",
+      eyebrow: "FAQ",
+      title: "Frequently asked questions",
       items: [
         { q: "How far ahead should I book?", a: "For day tours, two or three days is usually enough. For Nusa Penida, Batur sunrise or anything in July, August and December, give us one to two weeks so we can hold the right boat and guide." },
         { q: "What is actually included?", a: "Car, fuel, parking, tolls, driver-guide and their meals. On private tours the entrance tickets and your own meals are separate; on sharing tours they are already bundled in. Every tour page lists it plainly." },
@@ -228,7 +269,7 @@ const en = {
     from: "from",
     empty: "No tours listed yet. Message us and we will build one.",
     customPrompt: {
-      title: "None of these quite right?",
+      title: "Looking for something different?",
       body: "Tell us what you had in mind instead and we will put a plan together.",
       cta: "Request a custom tour",
     },
@@ -238,7 +279,7 @@ const en = {
     back: "Back to",
     overview: "Overview",
     highlights: "Highlights",
-    itinerary: "The day, hour by hour",
+    itinerary: "Itinerary",
     includes: "Included",
     excludes: "Not included",
     bring: "What to bring",
@@ -262,7 +303,7 @@ const en = {
       eyebrow: "Testimonials",
       title: "Twelve thousand guests, and counting",
       subtitle:
-        "We ask everyone for honest feedback after their trip, the good and the awkward. Here is what came back.",
+        "We ask every guest for honest feedback after their trip. Here is what came back.",
     },
     stats: [
       { value: 4.9, suffix: "/5", label: "Average rating", decimals: 1 },
@@ -271,22 +312,22 @@ const en = {
       { value: 41, suffix: "", label: "Countries hosted", decimals: 0 },
     ],
     grid: {
-      eyebrow: "Straight from the inbox",
-      title: "What guests wrote",
+      eyebrow: "Reviews",
+      title: "What our guests say",
       filterAll: "All tours",
       empty: "No reviews in this category yet.",
     },
     verified: "Verified guest",
     cta: {
-      title: "Your turn",
-      subtitle: "Let us build the trip your friends will ask you about.",
+      title: "Ready to plan your trip?",
+      subtitle: "Tell us your dates and we will put a route together.",
     },
   },
 
   contact: {
     hero: {
       eyebrow: "Contact",
-      title: "Talk to an actual person",
+      title: "Get in touch",
       subtitle:
         "WhatsApp is fastest. We usually reply within fifteen minutes between 08.00 and 22.00 Bali time. Email works too, just a little slower.",
     },
@@ -316,6 +357,14 @@ const en = {
       datesPh: "e.g. 12–18 September",
       pax: "How many people",
       paxPh: "e.g. 2 adults, 1 child",
+      interest: "Which tour interests you",
+      interestOpts: [
+        "Not sure yet",
+        "Private tour",
+        "Sharing tour",
+        "Customized tour",
+        "Something else",
+      ],
       message: "Message",
       messagePh: "Tell us anything. Dates, questions, wild ideas.",
       submit: "Open WhatsApp",
@@ -395,7 +444,7 @@ const en = {
 
   loader: {
     welcome: "Welcome to",
-    tagline: "Getting the island ready",
+    tagline: "Bali tours since 2014",
     loading: "Loading",
   },
 
@@ -581,8 +630,8 @@ const en = {
 
   notFound: {
     code: "404",
-    title: "Took a wrong turn",
-    subtitle: "This page is not on any of our routes.",
+    title: "Page not found",
+    subtitle: "The page you are looking for does not exist or has moved.",
     cta: "Back to home",
   },
 
@@ -592,6 +641,10 @@ const en = {
     perPerson: "per person",
     optional: "optional",
     skipToContent: "Skip to content",
+    choose: "Choose an option",
+    openList: "Open the list of options",
+    pickDate: "Pick a date",
+    photoCredit: "Photography from Pexels",
   },
 };
 
@@ -602,7 +655,7 @@ type Dict = typeof en;
 const id: Dict = {
   brand: {
     name: "Vera Bali Tour",
-    tagline: "Keliling Bali seperti diajak jalan sama teman sendiri.",
+    tagline: "Guide lokal, harga jujur, hari yang tidak terburu-buru.",
   },
 
   nav: {
@@ -650,18 +703,21 @@ const id: Dict = {
   home: {
     hero: {
       eyebrow: "Operator lokal berlisensi, sejak 2014",
-      title: "Nikmati Bali ala orang lokal, bukan sekadar checklist",
+      title: "Jelajahi Bali bersama guide yang tinggal di sini",
       subtitle:
-        "Tim kecil asli Bali yang menjalankan trip harian private, sharing, dan full custom. Tanpa megafon, tanpa mampir toko oleh-oleh paksaan.",
+        "Tim kecil asli Bali yang menjalankan trip harian private, sharing, dan full custom. Harga jujur dan hari yang tidak terburu-buru.",
       ctaPrimary: "Booking via WhatsApp",
       ctaSecondary: "Lihat tur kami",
       stat1: "12.400 tamu dipandu",
       stat2: "Rating rata-rata 4,9",
       stat3: "Dibalas sekitar 15 menit",
+      slideLabel: "Tampilkan slide",
+      pause: "Jeda slideshow",
+      play: "Putar slideshow",
     },
     about: {
       eyebrow: "Tentang kami",
-      title: "Satu mobil di 2014. Sekarang delapan belas orang, dan pesan masih kami balas sendiri.",
+      title: "Dari satu mobil di 2014 jadi tim delapan belas orang",
       body: [
         "Vera besar di Gianyar, sepuluh menit dari sawah terasering yang sekarang antre difoto turis. Setelah bertahun-tahun jadi driver di agensi besar, dia selalu ketemu masalah yang sama: jadwal selalu menang, tamu selalu mengalah.",
         "Jadi dia mulai sesuatu yang lebih kecil. Satu aturan, dulu sampai sekarang: itinerary yang menyesuaikan tamu, bukan sebaliknya.",
@@ -678,9 +734,47 @@ const id: Dict = {
       title: "Tiga cara jalan-jalan",
       subtitle: "Guide-nya sama, perhatiannya sama. Tinggal pilih format yang pas dengan budget dan seberapa privat yang Anda mau.",
     },
+    locations: {
+      eyebrow: "Destinasi",
+      title: "Ke mana saja kami bisa mengantar Anda",
+      subtitle:
+        "Semua rute di bawah bisa digabung dalam satu hari atau dipecah ke beberapa hari. Sebutkan mana yang Anda mau, urutannya kami atur menyesuaikan lalu lintas dan cahaya.",
+      items: [
+        {
+          name: "Ubud & Dataran Tinggi",
+          area: "Gianyar",
+          desc: "Sawah terasering, monkey forest, mata air suci, dan ngopi dengan pemandangan lembah.",
+        },
+        {
+          name: "Nusa Penida",
+          area: "45 menit naik kapal",
+          desc: "Tebing Kelingking, Broken Beach, dan Crystal Bay, dicapai dengan kapal pertama sebelum ramai.",
+        },
+        {
+          name: "Gunung Batur",
+          area: "Kintamani",
+          desc: "Berangkat saat masih gelap, mendaki dua jam, sarapan dimasak dengan uap vulkanik di ketinggian 1.717 meter.",
+        },
+        {
+          name: "Uluwatu & Bali Selatan",
+          area: "Badung",
+          desc: "Pura di atas tebing, tari api Kecak saat matahari terbenam, dan seafood bakar di pasir Jimbaran.",
+        },
+        {
+          name: "Air Terjun Bali Utara",
+          area: "Buleleng",
+          desc: "Sekumpul, Banyumala, dan Git Git. Sisi pulau yang hijau, sejuk, dan jauh dari macet.",
+        },
+        {
+          name: "Sidemen & Bali Timur",
+          area: "Karangasem",
+          desc: "Desa tenun, taman air, dan Bali yang tenang seperti yang dicari orang di era delapan puluhan.",
+        },
+      ],
+    },
     testimonial: {
-      eyebrow: "Kata tamu kami",
-      title: "Bukan kami yang menulis",
+      eyebrow: "Testimoni",
+      title: "Apa kata tamu kami",
       cta: "Baca semua ulasan",
     },
     contact: {
@@ -695,13 +789,13 @@ const id: Dict = {
   about: {
     hero: {
       eyebrow: "Tentang kami",
-      title: "Berawal dari satu mobil dan daftar tempat favorit yang kepanjangan",
+      title: "Operator tur Bali berskala kecil, berjalan sejak 2014",
       subtitle:
         "Vera Bali Tour lahir tahun 2014 di ruang tamu sebuah rumah di Denpasar. Sepuluh tahun kemudian kami masih sengaja bertahan kecil. Begitu kami tumbuh melebihi yang bisa kami cek sendiri, trip-nya berhenti terasa seperti milik kami.",
     },
     story: {
       eyebrow: "Cerita kami",
-      title: "Kami bikin perusahaan yang dulu kami cari-cari",
+      title: "Awal mula Vera Bali Tour",
       body: [
         "Vera besar di Gianyar, sepuluh menit dari sawah terasering yang sekarang antre difoto turis. Setelah bertahun-tahun jadi driver di agensi besar, dia selalu ketemu masalah yang sama: jadwal selalu menang, tamu selalu mengalah.",
         "Jadi di tahun 2014 dia mulai sesuatu yang lebih kecil. Satu mobil, satu nomor telepon, dan satu aturan: itinerary yang menyesuaikan tamu, bukan sebaliknya. Bulan pertama dapat empat booking. Keempatnya kirim teman.",
@@ -709,8 +803,8 @@ const id: Dict = {
       ],
     },
     values: {
-      eyebrow: "Yang kami pegang",
-      title: "Tiga hal yang tidak kami tawar",
+      eyebrow: "Nilai kami",
+      title: "Tiga hal yang tidak pernah kami tawar",
       items: [
         {
           title: "Tidak ada yang diburu-buru",
@@ -727,8 +821,8 @@ const id: Dict = {
       ],
     },
     timeline: {
-      eyebrow: "Versi panjangnya",
-      title: "Perjalanan sampai di sini",
+      eyebrow: "Perjalanan kami",
+      title: "Tonggak penting",
       items: [
         { year: "2014", title: "Satu mobil, satu driver", desc: "Vera mulai terima booking bermodal buku catatan dan Avanza bekas." },
         { year: "2016", title: "Rute sharing pertama", desc: "Permintaan dari solo traveler mendorong kami membuka trip grup kecil." },
@@ -740,7 +834,7 @@ const id: Dict = {
     },
     team: {
       eyebrow: "Orang-orangnya",
-      title: "Siapa yang benar-benar ngobrol dengan Anda",
+      title: "Kenalan dengan tim kami",
       items: [
         { name: "Vera Hutasoit", role: "Founder & Head Planner", bio: "Menyusun sendiri setiap itinerary custom. Siap berdebat soal spot sunrise terbaik." },
         { name: "Made Suparta", role: "Lead Guide", bio: "Berlisensi sejak 2009. Bahasa Bali, Indonesia, Inggris, dan tata krama pura." },
@@ -753,7 +847,7 @@ const id: Dict = {
       items: ["Operator tur terdaftar", "Asuransi penumpang", "Guide lokal bersertifikat", "Mitra pembayaran terverifikasi"],
     },
     cta: {
-      title: "Ayo jalan bareng kami",
+      title: "Siap jalan bareng kami?",
       subtitle: "Ceritakan trip yang Anda bayangkan. Kami akan jujur soal apa yang realistis.",
     },
   },
@@ -766,8 +860,8 @@ const id: Dict = {
         "Semua tur dijalankan guide berlisensi kami sendiri dengan harga flat. Jelajahi katalog private dan sharing, atau kirim wishlist Anda dan kami susunkan.",
     },
     compare: {
-      eyebrow: "Berdampingan",
-      title: "Mana yang paling cocok",
+      eyebrow: "Perbandingan",
+      title: "Format mana yang paling cocok",
       headers: ["", "Private", "Sharing", "Customized"],
       rows: [
         { label: "Harga mulai", values: ["Rp 850.000 / mobil", "Rp 245.000 / orang", "Menyesuaikan"] },
@@ -779,8 +873,8 @@ const id: Dict = {
       ],
     },
     faq: {
-      eyebrow: "Sebelum Anda tanya",
-      title: "Pertanyaan yang sering masuk",
+      eyebrow: "FAQ",
+      title: "Pertanyaan yang sering diajukan",
       items: [
         { q: "Sebaiknya booking berapa lama sebelumnya?", a: "Untuk tur harian, dua sampai tiga hari biasanya cukup. Untuk Nusa Penida, sunrise Batur, atau tanggal di Juli, Agustus, dan Desember, kasih kami satu sampai dua minggu supaya kapal dan guide-nya bisa dikunci." },
         { q: "Harga itu sudah termasuk apa saja?", a: "Mobil, bensin, parkir, tol, driver-guide, dan makan mereka. Di private tour, tiket masuk dan makan Anda dihitung terpisah; di sharing tour semuanya sudah digabung. Setiap halaman tur menuliskannya dengan jelas." },
@@ -815,7 +909,7 @@ const id: Dict = {
     from: "mulai",
     empty: "Belum ada tur di sini. Chat kami dan akan kami susunkan.",
     customPrompt: {
-      title: "Belum ada yang pas?",
+      title: "Mencari yang lain?",
       body: "Ceritakan yang Anda bayangkan, nanti kami susunkan rencananya.",
       cta: "Ajukan tur custom",
     },
@@ -825,7 +919,7 @@ const id: Dict = {
     back: "Kembali ke",
     overview: "Gambaran",
     highlights: "Yang bikin menarik",
-    itinerary: "Susunan harinya, jam per jam",
+    itinerary: "Rangkaian acara",
     includes: "Sudah termasuk",
     excludes: "Belum termasuk",
     bring: "Yang perlu dibawa",
@@ -849,7 +943,7 @@ const id: Dict = {
       eyebrow: "Testimoni",
       title: "Dua belas ribu tamu, dan terus bertambah",
       subtitle:
-        "Kami minta masukan jujur ke semua tamu setelah trip, yang enak maupun yang bikin kami mikir. Ini hasilnya.",
+        "Kami minta masukan jujur dari setiap tamu setelah trip. Ini hasilnya.",
     },
     stats: [
       { value: 4.9, suffix: "/5", label: "Rating rata-rata", decimals: 1 },
@@ -858,22 +952,22 @@ const id: Dict = {
       { value: 41, suffix: "", label: "Negara asal tamu", decimals: 0 },
     ],
     grid: {
-      eyebrow: "Langsung dari kotak masuk",
+      eyebrow: "Ulasan",
       title: "Apa kata tamu kami",
       filterAll: "Semua tur",
       empty: "Belum ada ulasan di kategori ini.",
     },
     verified: "Tamu terverifikasi",
     cta: {
-      title: "Sekarang giliran Anda",
-      subtitle: "Ayo susun trip yang nanti ditanyain terus sama teman-teman Anda.",
+      title: "Siap menyusun trip Anda?",
+      subtitle: "Sebutkan tanggalnya, nanti kami susunkan rutenya.",
     },
   },
 
   contact: {
     hero: {
       eyebrow: "Kontak",
-      title: "Ngobrol langsung dengan orangnya",
+      title: "Hubungi kami",
       subtitle:
         "WhatsApp paling cepat. Biasanya kami balas dalam lima belas menit, antara jam 08.00 sampai 22.00 WITA. Email juga bisa, cuma agak lebih lambat.",
     },
@@ -903,6 +997,14 @@ const id: Dict = {
       datesPh: "mis. 12–18 September",
       pax: "Berapa orang",
       paxPh: "mis. 2 dewasa, 1 anak",
+      interest: "Tur mana yang Anda minati",
+      interestOpts: [
+        "Belum tahu",
+        "Private tour",
+        "Sharing tour",
+        "Customized tour",
+        "Lainnya",
+      ],
       message: "Pesan",
       messagePh: "Ceritakan apa saja. Tanggal, pertanyaan, atau ide liar sekalipun.",
       submit: "Buka WhatsApp",
@@ -982,7 +1084,7 @@ const id: Dict = {
 
   loader: {
     welcome: "Selamat datang di",
-    tagline: "Menyiapkan pulaunya",
+    tagline: "Tur Bali sejak 2014",
     loading: "Memuat",
   },
 
@@ -1168,8 +1270,8 @@ const id: Dict = {
 
   notFound: {
     code: "404",
-    title: "Sepertinya salah belok",
-    subtitle: "Halaman ini tidak ada di rute kami.",
+    title: "Halaman tidak ditemukan",
+    subtitle: "Halaman yang Anda cari tidak ada atau sudah dipindahkan.",
     cta: "Kembali ke beranda",
   },
 
@@ -1179,6 +1281,10 @@ const id: Dict = {
     perPerson: "per orang",
     optional: "opsional",
     skipToContent: "Lompat ke konten",
+    choose: "Pilih salah satu",
+    openList: "Buka daftar pilihan",
+    pickDate: "Pilih tanggal",
+    photoCredit: "Fotografi dari Pexels",
   },
 };
 

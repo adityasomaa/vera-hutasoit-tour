@@ -5,7 +5,7 @@ import { Reveal, RevealGroup, RevealItem } from "@/components/ui/Reveal";
 import { TransitionLink } from "@/components/ui/TransitionLink";
 import { buttonClass } from "@/components/ui/Button";
 import { TourCard } from "@/components/sections/TourCard";
-import { Scene } from "@/components/graphics/Scene";
+import { Photo } from "@/components/graphics/Photo";
 import { waBookTour, waLink, WA_GENERAL } from "@/lib/site";
 import { toursByFormat, type Tour } from "@/lib/tours";
 
@@ -48,8 +48,8 @@ export function TourDetailView({ tour }: { tour: Tour }) {
           </Reveal>
 
           <Reveal delay={0.08}>
-            <div className="mt-10 aspect-16/9 overflow-hidden rounded-xl border border-line">
-              <Scene variant={tour.scene} seed={2} />
+            <div className="relative mt-10 aspect-16/9 overflow-hidden rounded-xl border border-line">
+              <Photo name={tour.cover} alt={tour.name[lang]} sizes="100vw" priority />
             </div>
           </Reveal>
         </div>
@@ -155,9 +155,9 @@ export function TourDetailView({ tour }: { tour: Tour }) {
                   {tour.gallery.map((g, i) => (
                     <div
                       key={`${g}-${i}`}
-                      className="aspect-square overflow-hidden rounded-lg border border-line"
+                      className="relative aspect-square overflow-hidden rounded-lg border border-line"
                     >
-                      <Scene variant={g} seed={i + 4} />
+                      <Photo name={g} alt="" sizes="(max-width: 640px) 33vw, 22vw" />
                     </div>
                   ))}
                 </div>
@@ -225,9 +225,9 @@ export function TourDetailView({ tour }: { tour: Tour }) {
               </h2>
             </Reveal>
             <RevealGroup className="mt-8 grid gap-x-8 gap-y-12 sm:grid-cols-2">
-              {others.map((t, i) => (
+              {others.map((t) => (
                 <RevealItem key={t.slug}>
-                  <TourCard tour={t} index={i} />
+                  <TourCard tour={t} />
                 </RevealItem>
               ))}
             </RevealGroup>

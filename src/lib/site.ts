@@ -1,4 +1,5 @@
 import type { Lang } from "@/lib/i18n/dictionary";
+import type { PhotoKey } from "@/lib/photos";
 
 export const SITE = {
   name: "Vera Bali Tour",
@@ -52,37 +53,46 @@ export const TOUR_ROUTE: Record<TourKey, string | null> = {
 /** Flat colour only — one accent per format, no gradients. */
 export const TOUR_ACCENT: Record<
   TourKey,
-  { dot: string; text: string; chip: string; scene: SceneVariant }
+  { dot: string; text: string; chip: string; photo: PhotoKey }
 > = {
   private: {
     dot: "bg-lagoon",
     text: "text-lagoon-deep",
     chip: "bg-lagoon-soft text-lagoon-deep",
-    scene: "terrace",
+    photo: "ubudSwing",
   },
   sharing: {
     dot: "bg-sunbeam",
     text: "text-sunbeam-deep",
     chip: "bg-sunbeam-soft text-sunbeam-deep",
-    scene: "boat",
+    photo: "beachBoats",
   },
   customized: {
     dot: "bg-coral",
     text: "text-coral-deep",
     chip: "bg-coral-soft text-coral-deep",
-    scene: "cliff",
+    photo: "templeGates",
   },
 };
 
-export type SceneVariant =
-  | "temple"
-  | "beach"
-  | "terrace"
-  | "volcano"
-  | "waterfall"
-  | "boat"
-  | "cliff"
-  | "village";
+/** Home hero slider — iconic Bali, alternating dark and light frames. */
+export const HERO_SLIDES: PhotoKey[] = [
+  "heroTerrace",
+  "heroKelingking",
+  "heroLempuyang",
+  "heroBatur",
+  "heroUluwatu",
+];
+
+/** The "where we can take you" section on the home page. */
+export const LOCATIONS: { id: string; photo: PhotoKey }[] = [
+  { id: "ubud", photo: "locUbud" },
+  { id: "penida", photo: "locPenida" },
+  { id: "batur", photo: "locBatur" },
+  { id: "uluwatu", photo: "locUluwatu" },
+  { id: "waterfalls", photo: "locWaterfall" },
+  { id: "sidemen", photo: "locSidemen" },
+];
 
 /** Destination options offered inside the customized request form. */
 export const DESTINATION_OPTIONS: { id: string; label: Record<Lang, string> }[] = [
