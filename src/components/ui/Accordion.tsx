@@ -2,63 +2,62 @@
 
 import { useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
-import { Plus } from "lucide-react";
 import { cn } from "@/lib/utils";
 
+/** Hairline-separated list. No card, no border box, no icon chrome. */
 export function Accordion({
   items,
   className,
-  defaultOpen = 0,
 }: {
   items: { q: string; a: string }[];
   className?: string;
-  defaultOpen?: number | null;
 }) {
-  const [open, setOpen] = useState<number | null>(defaultOpen);
+  const [open, setOpen] = useState<number | null>(0);
 
   return (
-    <div className={cn("divide-y divide-ink/10 overflow-hidden rounded-3xl border border-ink/10 bg-white/70 backdrop-blur", className)}>
+    <div className={cn("divide-y divide-line border-y border-line", className)}>
       {items.map((item, i) => {
         const isOpen = open === i;
         return (
-          <div key={i} className="group">
+          <div key={i}>
             <button
               type="button"
               onClick={() => setOpen(isOpen ? null : i)}
               aria-expanded={isOpen}
-              className="flex w-full items-start gap-4 px-5 py-5 text-left transition-colors duration-300 hover:bg-lagoon-50/70 sm:px-7 sm:py-6"
+              className="group flex w-full items-start justify-between gap-6 py-5 text-left"
             >
               <span
                 className={cn(
-                  "mt-0.5 grid h-7 w-7 shrink-0 place-items-center rounded-full transition-all duration-500",
-                  isOpen
-                    ? "rotate-[135deg] bg-coral-500 text-white"
-                    : "bg-ink/8 text-ink/60 group-hover:bg-lagoon-500 group-hover:text-white"
-                )}
-              >
-                <Plus className="h-4 w-4" strokeWidth={2.6} />
-              </span>
-              <span
-                className={cn(
-                  "font-display text-base font-bold leading-snug transition-colors duration-300 sm:text-lg",
-                  isOpen ? "text-lagoon-700" : "text-ink"
+                  "font-display text-[1.02rem] font-medium leading-snug transition-colors duration-200",
+                  isOpen ? "text-ink" : "text-ink-2 group-hover:text-ink"
                 )}
               >
                 {item.q}
+              </span>
+              <span
+                aria-hidden="true"
+                className="relative mt-2 h-2.5 w-2.5 shrink-0"
+              >
+                <span className="absolute inset-x-0 top-1/2 h-px -translate-y-1/2 bg-faint transition-colors duration-200 group-hover:bg-ink" />
+                <span
+                  className={cn(
+                    "absolute inset-y-0 left-1/2 w-px -translate-x-1/2 bg-faint transition-all duration-300 group-hover:bg-ink",
+                    isOpen && "scale-y-0"
+                  )}
+                />
               </span>
             </button>
 
             <AnimatePresence initial={false}>
               {isOpen && (
                 <motion.div
-                  key="body"
                   initial={{ height: 0, opacity: 0 }}
                   animate={{ height: "auto", opacity: 1 }}
                   exit={{ height: 0, opacity: 0 }}
-                  transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+                  transition={{ duration: 0.32, ease: [0.25, 1, 0.5, 1] }}
                   className="overflow-hidden"
                 >
-                  <p className="px-5 pb-6 pl-16 text-[0.95rem] leading-relaxed text-ink/70 sm:px-7 sm:pl-[4.4rem]">
+                  <p className="max-w-[68ch] pb-6 pr-10 text-[0.94rem] leading-relaxed text-muted">
                     {item.a}
                   </p>
                 </motion.div>

@@ -8,14 +8,11 @@ import {
   useMemo,
   useState,
 } from "react";
-import type { TourKey } from "@/lib/site";
 
+/** Only the customized tour uses a form. Private and sharing have their own pages. */
 type Ctx = {
   open: boolean;
-  preset: TourKey | null;
-  /** Optional package/route name pre-filled into the notes field. */
-  presetNote: string | null;
-  openModal: (tour?: TourKey, note?: string) => void;
+  openModal: () => void;
   closeModal: () => void;
 };
 
@@ -23,18 +20,10 @@ const TourModalContext = createContext<Ctx | null>(null);
 
 export function TourModalProvider({ children }: { children: React.ReactNode }) {
   const [open, setOpen] = useState(false);
-  const [preset, setPreset] = useState<TourKey | null>(null);
-  const [presetNote, setPresetNote] = useState<string | null>(null);
 
-  const openModal = useCallback((tour?: TourKey, note?: string) => {
-    setPreset(tour ?? null);
-    setPresetNote(note ?? null);
-    setOpen(true);
-  }, []);
-
+  const openModal = useCallback(() => setOpen(true), []);
   const closeModal = useCallback(() => setOpen(false), []);
 
-  /* Close on Escape */
   useEffect(() => {
     if (!open) return;
     const onKey = (e: KeyboardEvent) => {
@@ -44,7 +33,6 @@ export function TourModalProvider({ children }: { children: React.ReactNode }) {
     return () => window.removeEventListener("keydown", onKey);
   }, [open]);
 
-  /* Lock the page behind the modal */
   useEffect(() => {
     if (!open) return;
     const prev = document.body.style.paddingRight;
@@ -58,14 +46,12 @@ export function TourModalProvider({ children }: { children: React.ReactNode }) {
   }, [open]);
 
   const value = useMemo(
-    () => ({ open, preset, presetNote, openModal, closeModal }),
-    [open, preset, presetNote, openModal, closeModal]
+    () => ({ open, openModal, closeModal }),
+    [open, openModal, closeModal]
   );
 
   return (
-    <TourModalContext.Provider value={value}>
-      {children}
-    </TourModalContext.Provider>
+    <TourModalContext.Provider value={value}>{children}</TourModalContext.Provider>
   );
 }
 

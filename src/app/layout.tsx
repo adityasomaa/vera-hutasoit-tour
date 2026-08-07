@@ -14,7 +14,7 @@ import {
   LanguageSwitch,
   WhatsAppButton,
 } from "@/components/floating/FloatingUI";
-import { CursorGlow, GrainOverlay, ScrollProgress } from "@/components/layout/Chrome";
+import { ScrollProgress } from "@/components/layout/Chrome";
 import { SITE } from "@/lib/site";
 
 const outfit = Outfit({
@@ -87,8 +87,6 @@ export default function RootLayout({
           </a>
 
           <ScrollProgress />
-          <CursorGlow />
-          <GrainOverlay />
 
           <IntroLoader />
           <PageCurtain />

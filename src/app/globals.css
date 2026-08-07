@@ -1,70 +1,88 @@
 @import "tailwindcss";
 
 /* ============================================================
-   VERA BALI TOUR — Design System
-   3 connected "fun" palettes:
-     1. LAGOON   → tropical water teal   (primary / trust)
-     2. CORAL    → sunset coral          (energy / CTA)
-     3. SUNBEAM  → frangipani gold       (warmth / accent)
-   Neutrals: INK (deep sea night) + SAND (volcanic beach cream)
+   VERA BALI TOUR — design tokens
+
+   Colour strategy: RESTRAINED.
+   Warm tinted neutrals carry ~85% of every surface. Lagoon is the
+   single working colour (~12%). Coral and Sunbeam are rare, small
+   accents (~3% combined) reserved for one job each:
+     coral   → the booking action
+     sunbeam → ratings and highlight marks
+   Flat colour only. No gradients anywhere.
    ============================================================ */
 
 @theme {
-  /* ---- Palette 1 · LAGOON ---- */
-  --color-lagoon-50: #ecfefb;
-  --color-lagoon-100: #cdfaf3;
-  --color-lagoon-200: #9bf3e9;
-  --color-lagoon-300: #5fe6db;
-  --color-lagoon-400: #29cfc5;
-  --color-lagoon-500: #0fb5ae;
-  --color-lagoon-600: #05928f;
-  --color-lagoon-700: #077473;
-  --color-lagoon-800: #0a5c5c;
-  --color-lagoon-900: #0d4b4c;
-  --color-lagoon-950: #032b2d;
+  /* ---- neutrals (tinted toward the brand hue, never pure) ---- */
+  --color-ink: oklch(0.23 0.019 208);
+  --color-ink-2: oklch(0.34 0.017 208);
+  --color-muted: oklch(0.53 0.013 208);
+  --color-faint: oklch(0.66 0.011 208);
+  --color-line: oklch(0.89 0.008 205);
+  --color-line-2: oklch(0.94 0.006 200);
+  --color-surface: oklch(0.995 0.004 95);
+  --color-paper: oklch(0.977 0.008 92);
+  --color-paper-2: oklch(0.955 0.013 88);
 
-  /* ---- Palette 2 · CORAL ---- */
-  --color-coral-50: #fff3f0;
-  --color-coral-100: #ffe3dc;
-  --color-coral-200: #ffc7ba;
-  --color-coral-300: #ffa08c;
-  --color-coral-400: #ff7d63;
-  --color-coral-500: #ff6b57;
-  --color-coral-600: #ef4529;
-  --color-coral-700: #c93320;
-  --color-coral-800: #a52d1e;
-  --color-coral-900: #882b20;
+  /* ---- lagoon · the working colour ---- */
+  --color-lagoon: oklch(0.52 0.083 200);
+  --color-lagoon-deep: oklch(0.41 0.072 202);
+  --color-lagoon-mid: oklch(0.66 0.072 197);
+  --color-lagoon-soft: oklch(0.93 0.028 196);
+  --color-lagoon-faint: oklch(0.967 0.015 196);
 
-  /* ---- Palette 3 · SUNBEAM ---- */
-  --color-sunbeam-50: #fffaeb;
-  --color-sunbeam-100: #fff1c6;
-  --color-sunbeam-200: #ffe188;
-  --color-sunbeam-300: #ffcd4a;
-  --color-sunbeam-400: #ffc53d;
-  --color-sunbeam-500: #f9a90b;
-  --color-sunbeam-600: #dd8103;
-  --color-sunbeam-700: #b75b07;
-  --color-sunbeam-800: #94460d;
-  --color-sunbeam-900: #7a3a0e;
+  /* ---- coral · booking action only ---- */
+  --color-coral: oklch(0.61 0.132 33);
+  --color-coral-deep: oklch(0.52 0.128 32);
+  --color-coral-soft: oklch(0.95 0.028 40);
 
-  /* ---- Neutrals ---- */
-  --color-ink: #06171d;
-  --color-ink-2: #0b232c;
-  --color-ink-3: #14343f;
-  --color-sand: #fff8ee;
-  --color-sand-2: #f8ead6;
-  --color-sand-3: #ecd8be;
+  /* ---- sunbeam · ratings & marks only ---- */
+  --color-sunbeam: oklch(0.76 0.116 76);
+  --color-sunbeam-deep: oklch(0.58 0.104 68);
+  --color-sunbeam-soft: oklch(0.96 0.038 84);
 
-  /* ---- Fonts (wired in layout.tsx) ---- */
+  /* ---- legacy scale aliases, retuned & desaturated ----
+     Kept so any stray utility still lands on-palette. New work
+     should use the semantic tokens above. */
+  --color-lagoon-50: var(--color-lagoon-faint);
+  --color-lagoon-100: var(--color-lagoon-soft);
+  --color-lagoon-200: oklch(0.88 0.038 197);
+  --color-lagoon-300: var(--color-lagoon-mid);
+  --color-lagoon-400: oklch(0.6 0.078 199);
+  --color-lagoon-500: var(--color-lagoon);
+  --color-lagoon-600: oklch(0.47 0.078 201);
+  --color-lagoon-700: var(--color-lagoon-deep);
+  --color-lagoon-800: oklch(0.35 0.06 203);
+  --color-lagoon-900: oklch(0.29 0.048 205);
+  --color-coral-50: var(--color-coral-soft);
+  --color-coral-100: oklch(0.92 0.042 38);
+  --color-coral-300: oklch(0.76 0.09 34);
+  --color-coral-400: oklch(0.68 0.115 33);
+  --color-coral-500: var(--color-coral);
+  --color-coral-600: var(--color-coral-deep);
+  --color-coral-700: oklch(0.46 0.115 32);
+  --color-coral-800: oklch(0.4 0.1 31);
+  --color-sunbeam-50: var(--color-sunbeam-soft);
+  --color-sunbeam-100: oklch(0.93 0.055 84);
+  --color-sunbeam-200: oklch(0.88 0.082 82);
+  --color-sunbeam-300: oklch(0.82 0.102 79);
+  --color-sunbeam-400: var(--color-sunbeam);
+  --color-sunbeam-500: oklch(0.7 0.115 72);
+  --color-sunbeam-600: oklch(0.63 0.11 70);
+  --color-sunbeam-700: var(--color-sunbeam-deep);
+  --color-sunbeam-800: oklch(0.5 0.09 66);
+  --color-sand: var(--color-paper);
+  --color-sand-2: var(--color-paper-2);
+  --color-sand-3: oklch(0.92 0.018 86);
+
+  /* ---- type ---- */
   --font-display: var(--font-outfit), ui-sans-serif, system-ui, sans-serif;
   --font-sans: var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
 
-  /* ---- Motion ---- */
-  --ease-silk: cubic-bezier(0.65, 0, 0.35, 1);
+  /* ---- motion: ease-out only, no bounce ---- */
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
-  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
 
-  /* ---- Extra breakpoint ---- */
   --breakpoint-xs: 26rem;
 }
 
@@ -73,7 +91,6 @@
    ============================================================ */
 
 :root {
-  --nav-h: 4.5rem;
   color-scheme: light;
 }
 
@@ -87,16 +104,14 @@ html {
 }
 
 body {
-  background-color: var(--color-sand);
+  background-color: var(--color-paper);
   color: var(--color-ink);
   font-family: var(--font-sans);
   overflow-x: hidden;
   font-synthesis-weight: none;
-  text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
 }
 
-/* Lock scroll while an overlay owns the viewport */
 body[data-lock="true"] {
   overflow: hidden;
 }
@@ -107,171 +122,41 @@ h3,
 h4,
 .font-display {
   font-family: var(--font-display);
-  letter-spacing: -0.025em;
+  letter-spacing: -0.022em;
+  font-weight: 600;
 }
 
 ::selection {
-  background: var(--color-sunbeam-300);
+  background: var(--color-lagoon-soft);
   color: var(--color-ink);
 }
 
 :focus-visible {
-  outline: 2px solid var(--color-lagoon-500);
+  outline: 2px solid var(--color-lagoon);
   outline-offset: 3px;
-  border-radius: 4px;
+  border-radius: 3px;
 }
 
-/* Custom scrollbar (desktop) */
 @media (min-width: 768px) {
   ::-webkit-scrollbar {
-    width: 11px;
+    width: 10px;
   }
   ::-webkit-scrollbar-track {
-    background: var(--color-sand-2);
+    background: var(--color-paper-2);
   }
   ::-webkit-scrollbar-thumb {
-    background: linear-gradient(
-      180deg,
-      var(--color-lagoon-500),
-      var(--color-coral-500)
-    );
+    background: oklch(0.8 0.012 205);
     border-radius: 99px;
-    border: 3px solid var(--color-sand-2);
+    border: 3px solid var(--color-paper-2);
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(
-      180deg,
-      var(--color-lagoon-600),
-      var(--color-coral-600)
-    );
+    background: var(--color-lagoon-mid);
   }
 }
 
 /* ============================================================
-   KEYFRAMES
+   KEYFRAMES — only what survives the motion cut
    ============================================================ */
-
-@keyframes vbt-marquee {
-  from {
-    transform: translate3d(0, 0, 0);
-  }
-  to {
-    transform: translate3d(-50%, 0, 0);
-  }
-}
-
-@keyframes vbt-float {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-14px);
-  }
-}
-
-@keyframes vbt-float-slow {
-  0%,
-  100% {
-    transform: translateY(0) rotate(0deg);
-  }
-  50% {
-    transform: translateY(-24px) rotate(3deg);
-  }
-}
-
-@keyframes vbt-blob {
-  0%,
-  100% {
-    border-radius: 62% 38% 44% 56% / 46% 52% 48% 54%;
-    transform: translate(0, 0) rotate(0deg) scale(1);
-  }
-  33% {
-    border-radius: 38% 62% 58% 42% / 60% 38% 62% 40%;
-    transform: translate(3%, -4%) rotate(6deg) scale(1.05);
-  }
-  66% {
-    border-radius: 55% 45% 35% 65% / 40% 60% 40% 60%;
-    transform: translate(-3%, 3%) rotate(-5deg) scale(0.97);
-  }
-}
-
-@keyframes vbt-gradient-pan {
-  0%,
-  100% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-}
-
-@keyframes vbt-shimmer {
-  from {
-    transform: translateX(-120%) skewX(-18deg);
-  }
-  to {
-    transform: translateX(320%) skewX(-18deg);
-  }
-}
-
-@keyframes vbt-spin-slow {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@keyframes vbt-pulse-ring {
-  0% {
-    transform: scale(0.85);
-    opacity: 0.7;
-  }
-  70% {
-    transform: scale(1.55);
-    opacity: 0;
-  }
-  100% {
-    transform: scale(1.55);
-    opacity: 0;
-  }
-}
-
-@keyframes vbt-wave {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(-50%);
-  }
-}
-
-@keyframes vbt-sway {
-  0%,
-  100% {
-    transform: rotate(-2.5deg);
-  }
-  50% {
-    transform: rotate(2.5deg);
-  }
-}
-
-@keyframes vbt-dash {
-  to {
-    stroke-dashoffset: 0;
-  }
-}
-
-@keyframes vbt-twinkle {
-  0%,
-  100% {
-    opacity: 0.15;
-    transform: scale(0.7);
-  }
-  50% {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
 
 /* ============================================================
    UTILITIES
@@ -281,7 +166,7 @@ h4,
   width: 100%;
   margin-inline: auto;
   padding-inline: 1.25rem;
-  max-width: 80rem;
+  max-width: 74rem;
   @media (min-width: 768px) {
     padding-inline: 2rem;
   }
@@ -290,144 +175,40 @@ h4,
   }
 }
 
-@utility text-gradient-tri {
-  background-image: linear-gradient(
-    100deg,
-    var(--color-lagoon-600) 0%,
-    var(--color-lagoon-400) 22%,
-    var(--color-sunbeam-400) 55%,
-    var(--color-coral-500) 82%,
-    var(--color-coral-600) 100%
-  );
-  background-size: 220% auto;
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  animation: vbt-gradient-pan 9s ease-in-out infinite;
+/* Section rhythm — varied on purpose, not one padding everywhere */
+@utility section-y {
+  padding-block: 4.5rem;
+  @media (min-width: 768px) {
+    padding-block: 7rem;
+  }
 }
 
-@utility surface-card {
-  background: color-mix(in srgb, white 76%, transparent);
-  backdrop-filter: blur(16px);
-  border: 1px solid color-mix(in srgb, var(--color-ink) 8%, transparent);
-  box-shadow:
-    0 1px 2px color-mix(in srgb, var(--color-ink) 5%, transparent),
-    0 12px 40px -18px color-mix(in srgb, var(--color-ink) 30%, transparent);
+@utility section-y-tight {
+  padding-block: 3.5rem;
+  @media (min-width: 768px) {
+    padding-block: 5rem;
+  }
 }
 
-@utility animate-marquee {
-  animation: vbt-marquee 34s linear infinite;
-}
-
-@utility animate-float {
-  animation: vbt-float 6s ease-in-out infinite;
-}
-
-@utility animate-float-slow {
-  animation: vbt-float-slow 11s ease-in-out infinite;
-}
-
-@utility animate-blob {
-  animation: vbt-blob 18s ease-in-out infinite;
-}
-
-@utility animate-spin-slow {
-  animation: vbt-spin-slow 22s linear infinite;
-}
-
-@utility animate-sway {
-  animation: vbt-sway 5s ease-in-out infinite;
-}
-
-@utility animate-twinkle {
-  animation: vbt-twinkle 3.2s ease-in-out infinite;
-}
-
-/* Hover: underline that draws from left */
 @utility link-underline {
   position: relative;
   &::after {
     content: "";
     position: absolute;
     left: 0;
-    bottom: -3px;
-    height: 2px;
+    bottom: -2px;
+    height: 1px;
     width: 100%;
-    border-radius: 2px;
-    background: linear-gradient(
-      90deg,
-      var(--color-lagoon-500),
-      var(--color-coral-500)
-    );
+    background: currentColor;
     transform: scaleX(0);
     transform-origin: right;
-    transition: transform 0.42s var(--ease-out-expo);
+    transition: transform 0.38s var(--ease-out-quart);
   }
   &:hover::after,
   &[data-active="true"]::after {
     transform: scaleX(1);
     transform-origin: left;
   }
-}
-
-/* Shine sweep on hover */
-@utility shine {
-  position: relative;
-  overflow: hidden;
-  &::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(
-      90deg,
-      transparent,
-      rgba(255, 255, 255, 0.42),
-      transparent
-    );
-    transform: translateX(-120%) skewX(-18deg);
-    pointer-events: none;
-  }
-  &:hover::before {
-    animation: vbt-shimmer 0.95s var(--ease-out-expo);
-  }
-}
-
-/* Fine paper grain overlay */
-@utility grain-layer {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='0.42'/%3E%3C/svg%3E");
-}
-
-/* Dotted / grid backdrops */
-@utility bg-dotgrid {
-  background-image: radial-gradient(
-    color-mix(in srgb, var(--color-lagoon-700) 22%, transparent) 1px,
-    transparent 1px
-  );
-  background-size: 22px 22px;
-}
-
-@utility bg-linegrid {
-  background-image:
-    linear-gradient(
-      color-mix(in srgb, var(--color-ink) 6%, transparent) 1px,
-      transparent 1px
-    ),
-    linear-gradient(
-      90deg,
-      color-mix(in srgb, var(--color-ink) 6%, transparent) 1px,
-      transparent 1px
-    );
-  background-size: 46px 46px;
-}
-
-@utility mask-fade-x {
-  mask-image: linear-gradient(
-    90deg,
-    transparent,
-    black 8%,
-    black 92%,
-    transparent
-  );
 }
 
 @utility no-scrollbar {
