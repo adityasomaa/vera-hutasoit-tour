@@ -125,12 +125,7 @@ export function HeroSlider() {
             </a>
             <TransitionLink
               href="/tour"
-              className={cn(
-                buttonClass("outline", "lg"),
-                light
-                  ? "border-paper/40 text-paper hover:border-paper hover:bg-paper/10"
-                  : "border-ink/25 text-ink hover:border-ink hover:bg-ink/5"
-              )}
+              className={buttonClass(light ? "outlineLight" : "outline", "lg")}
             >
               {d.home.hero.ctaSecondary}
             </TransitionLink>

@@ -77,7 +77,7 @@ const en = {
     },
     about: {
       eyebrow: "About us",
-      title: "From one car in 2014 to a team of eighteen",
+      title: "A small local team, planning every trip by hand",
       body: [
         "Vera grew up in Gianyar, ten minutes from a rice terrace tourists now queue to photograph. After years driving for large agencies she kept hitting the same problem: the schedule always won and the guest always lost.",
         "So she started something smaller. One rule, then and now: the itinerary bends around the guest, never the other way round.",
@@ -644,6 +644,10 @@ const en = {
     choose: "Choose an option",
     openList: "Open the list of options",
     pickDate: "Pick a date",
+    prevMonth: "Previous month",
+    nextMonth: "Next month",
+    today: "Today",
+    clearDate: "Clear",
     photoCredit: "Photography from Pexels",
   },
 };
@@ -717,7 +721,7 @@ const id: Dict = {
     },
     about: {
       eyebrow: "Tentang kami",
-      title: "Dari satu mobil di 2014 jadi tim delapan belas orang",
+      title: "Tim lokal kecil yang menyusun setiap trip satu per satu",
       body: [
         "Vera besar di Gianyar, sepuluh menit dari sawah terasering yang sekarang antre difoto turis. Setelah bertahun-tahun jadi driver di agensi besar, dia selalu ketemu masalah yang sama: jadwal selalu menang, tamu selalu mengalah.",
         "Jadi dia mulai sesuatu yang lebih kecil. Satu aturan, dulu sampai sekarang: itinerary yang menyesuaikan tamu, bukan sebaliknya.",
@@ -1284,6 +1288,10 @@ const id: Dict = {
     choose: "Pilih salah satu",
     openList: "Buka daftar pilihan",
     pickDate: "Pilih tanggal",
+    prevMonth: "Bulan sebelumnya",
+    nextMonth: "Bulan berikutnya",
+    today: "Hari ini",
+    clearDate: "Hapus",
     photoCredit: "Fotografi dari Pexels",
   },
 };

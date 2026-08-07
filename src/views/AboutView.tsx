@@ -26,7 +26,7 @@ export function AboutView() {
             <Reveal>
               <div className="relative aspect-4/5 overflow-hidden rounded-xl border border-line">
                 <Photo
-                  name="balineseWoman"
+                  name="travellerViewpoint"
                   alt={d.about.story.title}
                   sizes="(max-width: 1024px) 100vw, 32vw"
                 />
@@ -143,7 +143,7 @@ export function AboutView() {
         </div>
       </section>
 
-      <CtaBand title={d.about.cta.title} subtitle={d.about.cta.subtitle} photo="ceremony" />
+      <CtaBand title={d.about.cta.title} subtitle={d.about.cta.subtitle} photo="travellersPalms" />
     </>
   );
 }

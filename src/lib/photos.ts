@@ -56,8 +56,13 @@ export const PHOTOS = {
   /* ---- supporting frames ---- */
   templeGates: p(7565600, "light", "#AEAFAD", "SHVETS production"),
   monkeyForest: p(2712005, "dark", "#454032", "Aleksandar Pasaric"),
-  offerings: p(9313851, "dark", "#634E3B", "Alexey Demidov"),
   penidaCliffWalk: p(3544408, "light", "#7E8E78", "Simon Sto FPV"),
+
+  /* ---- travellers out on the island ---- */
+  travellersTerrace: p(35144303, "dark", "#6C7F63", "Muammar Jefri"),
+  travellerViewpoint: p(17766681, "light", "#899B8B", "Hanuman Photo Studio"),
+  travellersPalms: p(4172930, "dark", "#696D53", "Gustavo Fring"),
+  hikerPenida: p(7057959, "light", "#929A8E", "Zizi zi"),
   penidaAerial: p(16582229, "dark", "#547177", "Phonsay Phothisomphane"),
   penidaBay: p(30286819, "dark", "#4F7373", "Saksham Vikram"),
   baturDawn: p(5985994, "dark", "#616056", "Dana Englich"),
@@ -65,13 +70,11 @@ export const PHOTOS = {
   baturClouds: p(5769316, "light", "#999AA0", "Julia Volk"),
   jungleFall: p(5993139, "dark", "#444434", "Alesia Kozik"),
   riceTerraceSoft: p(10804637, "light", "#97B496", "Vladimir Konoplev"),
-  balineseWoman: p(30678130, "dark", "#73705F", "Arjun Adinata"),
   uluwatuTemple: p(36653750, "dark", "#767269", "Tom Fisk"),
   kecakTorches: p(13945487, "dark", "#2D1B11", "el jusuf"),
   beachBoats: p(5656453, "light", "#628196", "Asian Wanderlust"),
   jukung: p(35833347, "light", "#8D857A", "AGUNG ANOM"),
   canoe: p(36663410, "dark", "#5B646D", "pierre matile"),
-  ceremony: p(34308120, "dark", "#677B79", "Tavip Budiono"),
   ubudSwing: p(35720624, "dark", "#64723F", "Nancy Turangan"),
   uluwatuCliffs: p(36407456, "dark", "#756D3E", "Tom Fisk"),
 } as const;

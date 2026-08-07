@@ -38,7 +38,7 @@ export function HomeView() {
             <Reveal>
               <div className="relative aspect-square overflow-hidden rounded-xl border border-line">
                 <Photo
-                  name="ceremony"
+                  name="travellersTerrace"
                   alt={d.home.about.title}
                   sizes="(max-width: 1024px) 100vw, 36vw"
                 />

@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils";
 /* Flat buttons. Solid fills, hairline outlines, no gradients, no glows.
    The press state is a 1px push, nothing more. */
 
-type Variant = "primary" | "book" | "outline" | "ghost";
+type Variant = "primary" | "book" | "outline" | "outlineLight" | "ghost";
 type Size = "sm" | "md" | "lg";
 
 const base =
@@ -15,6 +15,9 @@ const variants: Record<Variant, string> = {
   /* reserved for booking, the one place coral appears */
   book: "bg-coral text-paper hover:bg-coral-deep",
   outline: "border border-line bg-transparent text-ink hover:border-ink hover:bg-surface",
+  /* for use over a dark photograph — the fill stays dark so the label holds */
+  outlineLight:
+    "border border-paper/45 bg-transparent text-paper hover:border-paper hover:bg-paper/15",
   ghost: "text-muted hover:bg-line-2 hover:text-ink",
 };
 

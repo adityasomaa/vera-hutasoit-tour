@@ -48,7 +48,7 @@ const PRIVATE: Tour[] = [
     slug: "ubud-culture-day",
     format: "private",
     cover: "tourUbudCulture",
-    gallery: ["templeGates", "monkeyForest", "offerings"],
+    gallery: ["templeGates", "monkeyForest", "travellersPalms"],
     area: { en: "Ubud & Gianyar", id: "Ubud & Gianyar" },
     name: { en: "Ubud Culture Day", id: "Sehari Budaya Ubud" },
     tagline: {
@@ -436,7 +436,7 @@ const SHARING: Tour[] = [
     slug: "ubud-highlights-group",
     format: "sharing",
     cover: "tourUbudGroup",
-    gallery: ["jungleFall", "riceTerraceSoft", "balineseWoman"],
+    gallery: ["jungleFall", "riceTerraceSoft", "travellerViewpoint"],
     area: { en: "Ubud & Gianyar", id: "Ubud & Gianyar" },
     name: { en: "Ubud Highlights", id: "Ubud Highlights" },
     tagline: {
@@ -557,7 +557,7 @@ const SHARING: Tour[] = [
     slug: "nusa-penida-group",
     format: "sharing",
     cover: "tourPenidaGroup",
-    gallery: ["penidaAerial", "beachBoats", "canoe"],
+    gallery: ["hikerPenida", "penidaAerial", "beachBoats"],
     area: { en: "Nusa Penida", id: "Nusa Penida" },
     name: { en: "Nusa Penida Day Trip", id: "Nusa Penida Sehari" },
     tagline: {

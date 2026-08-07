@@ -76,8 +76,17 @@ export function TextArea({
 }
 
 /* ================================================================
-   Date input — the whole field opens the picker, not just the icon
+   Date input — our own calendar, never the browser's
    ================================================================ */
+
+const iso = (y: number, m: number, day: number) =>
+  `${y}-${String(m + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+
+const parseIso = (v: string) => {
+  const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(v);
+  if (!m) return null;
+  return { y: +m[1], m: +m[2] - 1, d: +m[3] };
+};
 
 export function DateInput({
   value,
@@ -89,60 +98,252 @@ export function DateInput({
   value: string;
   onChange: (v: string) => void;
   error?: string;
+  /** earliest selectable day, as YYYY-MM-DD */
   min?: string;
   id?: string;
 }) {
-  const { d } = useLang();
-  const ref = useRef<HTMLInputElement>(null);
+  const { d, lang } = useLang();
+  const locale = lang === "id" ? "id-ID" : "en-GB";
+  const wrap = useRef<HTMLDivElement>(null);
+  const btn = useRef<HTMLButtonElement>(null);
+  const [open, setOpen] = useState(false);
 
-  const openPicker = () => {
-    const el = ref.current;
-    if (!el) return;
-    try {
-      // Supported in Chromium, Firefox 101+ and Safari 16+.
-      el.showPicker?.();
-    } catch {
-      // Already open, or the browser refused. Focusing is the fallback.
-      el.focus();
-    }
+  const selected = parseIso(value);
+  const today = new Date();
+  const minParts = min ? parseIso(min) : null;
+
+  const [view, setView] = useState(() => ({
+    y: selected?.y ?? today.getFullYear(),
+    m: selected?.m ?? today.getMonth(),
+  }));
+
+  /* jump the calendar to the chosen month whenever it opens */
+  useEffect(() => {
+    if (!open) return;
+    const s = parseIso(value);
+    setView({ y: s?.y ?? today.getFullYear(), m: s?.m ?? today.getMonth() });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open]);
+
+  useEffect(() => {
+    if (!open) return;
+    const onDown = (e: MouseEvent) => {
+      if (!wrap.current?.contains(e.target as Node)) setOpen(false);
+    };
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setOpen(false);
+        btn.current?.focus();
+      }
+    };
+    document.addEventListener("mousedown", onDown);
+    window.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("mousedown", onDown);
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [open]);
+
+  /* Monday-first weekday abbreviations from the active locale. Kept at the
+     locale's own "short" length: truncating to two letters would make Senin
+     and Selasa both read "Se". */
+  const weekdays = Array.from({ length: 7 }, (_, i) =>
+    new Intl.DateTimeFormat(locale, { weekday: "short" }).format(
+      new Date(Date.UTC(2024, 0, 1 + i)) // 2024-01-01 was a Monday
+    )
+  );
+
+  const monthLabel = new Intl.DateTimeFormat(locale, {
+    month: "long",
+    year: "numeric",
+  }).format(new Date(view.y, view.m, 1));
+
+  const daysInMonth = new Date(view.y, view.m + 1, 0).getDate();
+  // getDay() is Sunday-first; shift so Monday is column 0
+  const leading = (new Date(view.y, view.m, 1).getDay() + 6) % 7;
+
+  const beforeMin = (day: number) => {
+    if (!minParts) return false;
+    const a = view.y * 10000 + view.m * 100 + day;
+    const b = minParts.y * 10000 + minParts.m * 100 + minParts.d;
+    return a < b;
   };
 
+  const isToday = (day: number) =>
+    view.y === today.getFullYear() &&
+    view.m === today.getMonth() &&
+    day === today.getDate();
+
+  const isSelected = (day: number) =>
+    !!selected && selected.y === view.y && selected.m === view.m && selected.d === day;
+
+  const shiftMonth = (delta: number) => {
+    setView((v) => {
+      const next = new Date(v.y, v.m + delta, 1);
+      return { y: next.getFullYear(), m: next.getMonth() };
+    });
+  };
+
+  const label = selected
+    ? new Intl.DateTimeFormat(locale, {
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+      }).format(new Date(selected.y, selected.m, selected.d))
+    : d.common.pickDate;
+
   return (
-    <div
-      className={cn(
-        "relative flex items-center rounded-lg border bg-surface transition-colors duration-200",
-        error ? "border-coral" : "border-line focus-within:border-lagoon"
-      )}
-      onClick={openPicker}
-    >
-      <input
+    <div ref={wrap} className="relative">
+      <button
         id={id}
-        ref={ref}
-        type="date"
-        value={value}
-        min={min}
-        onChange={(e) => onChange(e.target.value)}
-        aria-label={d.common.pickDate}
+        ref={btn}
+        type="button"
+        aria-haspopup="dialog"
+        aria-expanded={open}
+        onClick={() => setOpen((v) => !v)}
         className={cn(
-          "w-full cursor-pointer appearance-none bg-transparent px-3.5 py-2.5 text-[0.92rem] text-ink outline-none",
-          // stretch the native indicator across the field so a click anywhere
-          // opens the calendar, then hide it behind our own icon
-          "[&::-webkit-calendar-picker-indicator]:absolute [&::-webkit-calendar-picker-indicator]:inset-0",
-          "[&::-webkit-calendar-picker-indicator]:h-full [&::-webkit-calendar-picker-indicator]:w-full",
-          "[&::-webkit-calendar-picker-indicator]:cursor-pointer [&::-webkit-calendar-picker-indicator]:opacity-0",
-          !value && "text-faint"
+          controlBase,
+          controlTone(error),
+          "flex items-center justify-between gap-3",
+          open && !error && "border-lagoon"
         )}
-      />
+      >
+        <span className={cn(!selected && "text-faint")}>{label}</span>
+        <svg
+          viewBox="0 0 16 16"
+          className="h-4 w-4 shrink-0 text-faint"
+          fill="none"
+          aria-hidden="true"
+        >
+          <rect x="1.75" y="3.25" width="12.5" height="11" rx="2" stroke="currentColor" strokeWidth="1.3" />
+          <path d="M1.75 6.75h12.5M5.25 1.75v2.5M10.75 1.75v2.5" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
+        </svg>
+      </button>
+
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            role="dialog"
+            aria-label={d.common.pickDate}
+            initial={{ opacity: 0, y: -4 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -4 }}
+            transition={{ duration: 0.16, ease: [0.25, 1, 0.5, 1] }}
+            className="absolute left-0 z-30 mt-1.5 w-[17.5rem] rounded-lg border border-line bg-surface p-3 shadow-[0_14px_36px_-20px_rgba(20,40,45,0.4)]"
+          >
+            {/* month header */}
+            <div className="flex items-center justify-between gap-2">
+              <MonthBtn onClick={() => shiftMonth(-1)} label={d.common.prevMonth} back />
+              <span className="font-display text-[0.9rem] font-medium capitalize text-ink">
+                {monthLabel}
+              </span>
+              <MonthBtn onClick={() => shiftMonth(1)} label={d.common.nextMonth} />
+            </div>
+
+            {/* weekday header */}
+            <div className="mt-3 grid grid-cols-7 gap-0.5">
+              {weekdays.map((w, i) => (
+                <span
+                  key={i}
+                  className="grid h-7 place-items-center text-[0.68rem] font-medium uppercase text-faint"
+                >
+                  {w}
+                </span>
+              ))}
+            </div>
+
+            {/* day grid */}
+            <div className="grid grid-cols-7 gap-0.5">
+              {Array.from({ length: leading }).map((_, i) => (
+                <span key={`pad-${i}`} />
+              ))}
+              {Array.from({ length: daysInMonth }, (_, i) => i + 1).map((day) => {
+                const disabled = beforeMin(day);
+                const chosen = isSelected(day);
+                return (
+                  <button
+                    key={day}
+                    type="button"
+                    disabled={disabled}
+                    aria-pressed={chosen}
+                    aria-current={isToday(day) ? "date" : undefined}
+                    onClick={() => {
+                      onChange(iso(view.y, view.m, day));
+                      setOpen(false);
+                      btn.current?.focus();
+                    }}
+                    className={cn(
+                      "grid h-8 place-items-center rounded-md text-[0.84rem] tabular-nums transition-colors duration-150",
+                      disabled && "cursor-not-allowed text-line",
+                      !disabled && !chosen && "text-ink-2 hover:bg-lagoon-faint hover:text-ink",
+                      chosen && "bg-ink text-paper",
+                      !chosen && !disabled && isToday(day) && "font-semibold text-lagoon-deep"
+                    )}
+                  >
+                    {day}
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* footer */}
+            <div className="mt-3 flex items-center justify-between border-t border-line pt-2.5">
+              <button
+                type="button"
+                onClick={() => {
+                  const t = new Date();
+                  setView({ y: t.getFullYear(), m: t.getMonth() });
+                }}
+                className="text-[0.78rem] text-muted transition-colors hover:text-ink"
+              >
+                {d.common.today}
+              </button>
+              {selected && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    onChange("");
+                    setOpen(false);
+                    btn.current?.focus();
+                  }}
+                  className="text-[0.78rem] text-muted transition-colors hover:text-ink"
+                >
+                  {d.common.clearDate}
+                </button>
+              )}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
+
+function MonthBtn({
+  onClick,
+  label,
+  back,
+}: {
+  onClick: () => void;
+  label: string;
+  back?: boolean;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      aria-label={label}
+      className="grid h-7 w-7 place-items-center rounded-md text-muted transition-colors duration-150 hover:bg-line-2 hover:text-ink"
+    >
       <svg
-        viewBox="0 0 16 16"
-        className="pointer-events-none absolute right-3.5 h-4 w-4 text-faint"
+        viewBox="0 0 12 12"
+        className={cn("h-3 w-3", back && "rotate-180")}
         fill="none"
         aria-hidden="true"
       >
-        <rect x="1.75" y="3.25" width="12.5" height="11" rx="2" stroke="currentColor" strokeWidth="1.3" />
-        <path d="M1.75 6.75h12.5M5.25 1.75v2.5M10.75 1.75v2.5" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
+        <path d="M4 2l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
       </svg>
-    </div>
+    </button>
   );
 }
 
