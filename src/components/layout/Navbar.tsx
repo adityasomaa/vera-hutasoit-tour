@@ -23,6 +23,7 @@ export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [dropdown, setDropdown] = useState(false);
   const [mobile, setMobile] = useState(false);
+  const [mobileTours, setMobileTours] = useState(false);
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
@@ -35,7 +36,13 @@ export function Navbar() {
   useEffect(() => {
     setMobile(false);
     setDropdown(false);
+    setMobileTours(false);
   }, [pathname]);
+
+  /* collapse the tour submenu whenever the sheet is dismissed */
+  useEffect(() => {
+    if (!mobile) setMobileTours(false);
+  }, [mobile]);
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -195,14 +202,20 @@ export function Navbar() {
             </ul>
 
             <div className="flex items-center gap-2">
-              <a
-                href={waLink(WA_GENERAL[lang])}
-                target="_blank"
-                rel="noreferrer noopener"
-                className={buttonClass("book", "sm", "hidden sm:inline-flex")}
-              >
-                {d.nav.cta}
-              </a>
+              {/* Desktop only. Below lg the floating WhatsApp button is
+                  always on screen, so a second one here is just noise.
+                  The wrapper carries the visibility: putting `hidden` on the
+                  anchor itself collides with the button's own `inline-flex`. */}
+              <span className="hidden lg:block">
+                <a
+                  href={waLink(WA_GENERAL[lang])}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                  className={buttonClass("book", "sm")}
+                >
+                  {d.nav.cta}
+                </a>
+              </span>
 
               <button
                 type="button"
@@ -265,74 +278,127 @@ export function Navbar() {
             >
               <div className="container-vbt">
                 <ul className="divide-y divide-line border-y border-line">
-                  {ROUTES.map((r) => (
-                    <li key={r.href}>
-                      <TransitionLink
-                        href={r.href}
-                        onNavigate={() => setMobile(false)}
-                        className={cn(
-                          "block py-4 font-display text-xl font-medium transition-colors",
-                          isActive(r.href) ? "text-lagoon-deep" : "text-ink"
-                        )}
-                      >
-                        {d.nav[r.key]}
-                      </TransitionLink>
-                    </li>
-                  ))}
-                </ul>
+                  {ROUTES.map((r) => {
+                    /* Tour keeps its own row but carries the three formats
+                       with it, the same way the desktop dropdown does. */
+                    if (r.key === "tour") {
+                      return (
+                        <li key={r.href}>
+                          <div className="flex items-center">
+                            <TransitionLink
+                              href="/tour"
+                              onNavigate={() => setMobile(false)}
+                              className={cn(
+                                "flex-1 py-4 font-display text-xl font-medium transition-colors",
+                                isActive("/tour") ? "text-lagoon-deep" : "text-ink"
+                              )}
+                            >
+                              {d.nav.tour}
+                            </TransitionLink>
+                            <button
+                              type="button"
+                              onClick={() => setMobileTours((v) => !v)}
+                              aria-expanded={mobileTours}
+                              aria-controls="mobile-tour-menu"
+                              aria-label={d.nav.allTours}
+                              className="-mr-2 grid h-11 w-11 place-items-center rounded-full text-muted transition-colors hover:text-ink"
+                            >
+                              <svg
+                                viewBox="0 0 12 8"
+                                className={cn(
+                                  "h-2 w-3 transition-transform duration-300",
+                                  mobileTours && "rotate-180"
+                                )}
+                                fill="none"
+                                aria-hidden="true"
+                              >
+                                <path d="M1 1.5L6 6.5l5-5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                              </svg>
+                            </button>
+                          </div>
 
-                <p className="mt-7 text-[0.7rem] font-semibold uppercase tracking-[0.16em] text-muted">
-                  {d.nav.allTours}
-                </p>
-                <div className="mt-3 divide-y divide-line border-y border-line">
-                  {TOUR_KEYS.map((key) => {
-                    const t = d.tourTypes[key];
-                    const a = TOUR_ACCENT[key];
-                    const href = TOUR_ROUTE[key];
-                    const inner = (
-                      <>
-                        <span className={cn("mt-2 h-1.5 w-1.5 shrink-0 rounded-full", a.dot)} />
-                        <span>
-                          <span className="block font-display text-[0.98rem] font-medium text-ink">
-                            {t.name}
-                          </span>
-                          <span className="mt-0.5 block text-[0.82rem] text-muted">{t.short}</span>
-                        </span>
-                      </>
-                    );
-                    return href ? (
-                      <TransitionLink
-                        key={key}
-                        href={href}
-                        onNavigate={() => setMobile(false)}
-                        className="flex items-start gap-3 py-3.5"
-                      >
-                        {inner}
-                      </TransitionLink>
-                    ) : (
-                      <button
-                        key={key}
-                        type="button"
-                        onClick={() => {
-                          setMobile(false);
-                          openModal();
-                        }}
-                        className="flex w-full items-start gap-3 py-3.5 text-left"
-                      >
-                        {inner}
-                      </button>
+                          <AnimatePresence initial={false}>
+                            {mobileTours && (
+                              <motion.div
+                                id="mobile-tour-menu"
+                                initial={{ height: 0, opacity: 0 }}
+                                animate={{ height: "auto", opacity: 1 }}
+                                exit={{ height: 0, opacity: 0 }}
+                                transition={{ duration: 0.3, ease: [0.25, 1, 0.5, 1] }}
+                                className="overflow-hidden"
+                              >
+                                <div className="border-l border-line pb-4 pl-4">
+                                  {TOUR_KEYS.map((key) => {
+                                    const t = d.tourTypes[key];
+                                    const a = TOUR_ACCENT[key];
+                                    const href = TOUR_ROUTE[key];
+                                    const inner = (
+                                      <>
+                                        <span
+                                          className={cn(
+                                            "mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full",
+                                            a.dot
+                                          )}
+                                        />
+                                        <span>
+                                          <span className="block font-display text-[0.95rem] font-medium text-ink">
+                                            {t.name}
+                                          </span>
+                                          <span className="mt-0.5 block text-[0.8rem] text-muted">
+                                            {t.short}
+                                          </span>
+                                        </span>
+                                      </>
+                                    );
+                                    return href ? (
+                                      <TransitionLink
+                                        key={key}
+                                        href={href}
+                                        onNavigate={() => setMobile(false)}
+                                        className="flex items-start gap-3 py-2.5"
+                                      >
+                                        {inner}
+                                      </TransitionLink>
+                                    ) : (
+                                      <button
+                                        key={key}
+                                        type="button"
+                                        onClick={() => {
+                                          setMobile(false);
+                                          openModal();
+                                        }}
+                                        className="flex w-full items-start gap-3 py-2.5 text-left"
+                                      >
+                                        {inner}
+                                      </button>
+                                    );
+                                  })}
+                                </div>
+                              </motion.div>
+                            )}
+                          </AnimatePresence>
+                        </li>
+                      );
+                    }
+
+                    return (
+                      <li key={r.href}>
+                        <TransitionLink
+                          href={r.href}
+                          onNavigate={() => setMobile(false)}
+                          className={cn(
+                            "block py-4 font-display text-xl font-medium transition-colors",
+                            isActive(r.href) ? "text-lagoon-deep" : "text-ink"
+                          )}
+                        >
+                          {d.nav[r.key]}
+                        </TransitionLink>
+                      </li>
                     );
                   })}
-                </div>
+                </ul>
 
-                <a
-                  href={waLink(WA_GENERAL[lang])}
-                  target="_blank"
-                  rel="noreferrer noopener"
-                  className={buttonClass("book", "lg", "mt-7 w-full")}
-                >
-                  {d.nav.cta}
-                </a>
+                {/* No WhatsApp button here: the floating one is always on screen. */}
               </div>
             </motion.div>
           </motion.div>
