@@ -7,6 +7,9 @@ const nextConfig: NextConfig = {
     // break every photograph on the site.
     loader: "custom",
     loaderFile: "./src/lib/pexelsLoader.ts",
+    // Stop at 1920. On these originals 2048 costs 1 MB and 3840 costs 3.3 MB,
+    // for no visible gain on a photograph behind text.
+    deviceSizes: [640, 750, 828, 1080, 1200, 1600, 1920],
     remotePatterns: [
       {
         protocol: "https",

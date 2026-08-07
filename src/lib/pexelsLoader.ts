@@ -17,7 +17,7 @@ export default function pexelsLoader({ src, width, quality }: ImageLoaderProps) 
     url.searchParams.set("auto", "compress");
     url.searchParams.set("cs", "tinysrgb");
     url.searchParams.set("fit", "crop");
-    url.searchParams.set("w", String(width));
+    url.searchParams.set("w", String(Math.min(width, 1920)));
     url.searchParams.delete("h");
     if (quality) url.searchParams.set("q", String(quality));
     return url.toString();
